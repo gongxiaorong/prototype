@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>翻译参考对照表</title>
+<style>
+  :root {
+    --primary: #2B3F5F;
+    --text: #1A1A1A;
+    --muted: #666666;
+    --bg: #F5F6F8;
+    --surface: #FFFFFF;
+    --border: #E5E7EB;
+    --accent: #2B3F5F;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  header {
+    padding: 28px 24px 20px;
+    background: linear-gradient(135deg, #2B3F5F 0%, #1A1A1A 120%);
+    color: #fff;
+  }
+  header h1 { margin: 0 0 6px; font-size: 22px; font-weight: 700; letter-spacing: .5px; }
+  header .sub { font-size: 13px; opacity: .85; }
+  header .stat { margin-top: 10px; font-size: 13px; opacity: .9; }
+  header .stat b { color: #fff; }
+  .toolbar {
+    position: sticky; top: 0; z-index: 5;
+    display: flex; gap: 12px; align-items: center;
+    padding: 12px 24px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  }
+  .toolbar input {
+    flex: 1; max-width: 420px;
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .toolbar select {
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+    color: var(--text);
+    outline: none;
+    cursor: pointer;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .toolbar select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(43,63,95,.12);
+  }
+  .toolbar input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(43,63,95,.12);
+  }
+  .toolbar .count { font-size: 13px; color: var(--muted); white-space: nowrap; }
+  .table-wrap {
+    margin: 16px 24px 40px;
+    overflow-x: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  }
+  table { border-collapse: collapse; width: 100%; min-width: 860px; }
+  thead th {
+    position: sticky; top: 56px; z-index: 4;
+    background: #F0F2F5;
+    color: var(--primary);
+    font-weight: 700;
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 2px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    transition: background .15s;
+  }
+  thead th:hover { background: #E6E9EE; }
+  thead th .arrow { font-size: 11px; opacity: .4; margin-left: 4px; }
+  thead th.sorted .arrow { opacity: 1; color: var(--accent); }
+  tbody td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    word-break: break-word;
+  }
+  tbody tr.group-row td {
+    background: linear-gradient(135deg, #2B3F5F 0%, #1A1A1A 120%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: .4px;
+    padding: 11px 16px;
+    cursor: default;
+  }
+  tbody tr.group-row td .gcount {
+    float: right;
+    font-weight: 400;
+    opacity: .8;
+    font-size: 12px;
+  }
+  tbody tr.group-row td:hover { background: linear-gradient(135deg, #2B3F5F 0%, #1A1A1A 120%); }
+  tbody tr:nth-child(even) { background: #FAFBFC; }
+  tbody tr:hover { background: #EEF2F8; }
+  td.missing { color: #9CA3AF; font-style: italic; }
+  .empty { padding: 40px; text-align: center; color: var(--muted); }
+  footer { padding: 0 24px 32px; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>翻译参考对照表</h1>
+  <div class="sub">简体中文 / 繁體中文 / English / Indonesian</div>
+  <div class="stat">共 <b id="totalCount">648</b> 个翻译键（key），缺失项以 <b>—</b> 标注。</div>
+</header>
+<div class="toolbar">
+  <select id="groupSel" aria-label="按一级命名空间分组筛选">
+    <option value="__ALL__">全部分组</option>
+  </select>
+  <input id="search" type="text" placeholder="搜索任意语言译文…" autocomplete="off">
+  <span class="count" id="matchCount"></span>
+</div>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr id="headRow"></tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+  <div class="empty" id="emptyState" style="display:none;">未找到匹配的翻译项</div>
+</div>
+<footer></footer>
+
+<script>
+let ROWS = [
+    {"key":"tab.home","zh-CN":"首页","zh-HK":"首頁","en":"Home","id":"Beranda"},
+    {"key":"tab.orders","zh-CN":"订单","zh-HK":"訂單","en":"Orders","id":"Pesanan"},
+    {"key":"tab.profile","zh-CN":"我的","zh-HK":"我的","en":"Profile","id":"Profil"},
+    {"key":"tab.vehicles","zh-CN":"车辆","zh-HK":"車輛","en":"Vehicles","id":"Kendaraan"},
+    {"key":"login.accountMode","zh-CN":"账号登录","zh-HK":"帳號登入","en":"Account Login","id":"Masuk dengan Akun"},
+    {"key":"login.accountPlaceholder","zh-CN":"请输入账号","zh-HK":"請輸入帳號","en":"Enter account","id":"Masukkan akun"},
+    {"key":"login.agreePrefix","zh-CN":"我已阅读并同意","zh-HK":"我已閱讀並同意","en":"I have read and agree to the ","id":"Saya telah membaca dan menyetujui"},
+    {"key":"login.codeLabel","zh-CN":"验证码","zh-HK":"驗證碼","en":"Verification Code","id":"Kode Verifikasi"},
+    {"key":"login.codePlaceholder","zh-CN":"请输入验证码","zh-HK":"請輸入驗證碼","en":"Enter verification code","id":"Masukkan kode verifikasi"},
+    {"key":"login.codeSub","zh-CN":"验证码登录","zh-HK":"驗證碼登入","en":"Verification Code Login","id":"Masuk dengan Kode Verifikasi"},
+    {"key":"login.emailMode","zh-CN":"邮箱登录","zh-HK":"電郵登入","en":"Email Login","id":"Masuk dengan Email"},
+    {"key":"login.emailPlaceholder","zh-CN":"请输入邮箱","zh-HK":"請輸入電郵","en":"Enter email","id":"Masukkan email"},
+    {"key":"login.getCode","zh-CN":"获取验证码","zh-HK":"獲取驗證碼","en":"Get Code","id":"Dapatkan Kode Verifikasi"},
+    {"key":"login.login","zh-CN":"登录","zh-HK":"登入","en":"Log In","id":"Masuk"},
+    {"key":"login.needAgree","zh-CN":"请先阅读并同意隐私政策","zh-HK":"請先閱讀並同意隱私政策","en":"Please read and agree to the Privacy Policy first","id":"Silakan baca dan setujui Kebijakan Privasi terlebih dahulu"},
+    {"key":"login.passwordLabel","zh-CN":"密码","zh-HK":"密碼","en":"Password","id":"Kata Sandi"},
+    {"key":"login.passwordPlaceholder","zh-CN":"请输入密码","zh-HK":"請輸入密碼","en":"Enter password","id":"Masukkan kata sandi"},
+    {"key":"login.passwordSub","zh-CN":"密码登录","zh-HK":"密碼登入","en":"Password Login","id":"Masuk dengan Kata Sandi"},
+    {"key":"login.phoneMode","zh-CN":"手机号登录","zh-HK":"手機號登入","en":"Phone Login","id":"Masuk dengan Nomor Ponsel"},
+    {"key":"login.phonePlaceholder","zh-CN":"请输入手机号","zh-HK":"請輸入手機號","en":"Enter phone number","id":"Masukkan nomor ponsel"},
+    {"key":"login.privacyPolicy","zh-CN":"隐私政策","zh-HK":"隱私政策","en":"Privacy Policy","id":"Kebijakan Privasi"},
+    {"key":"login.switchLang","zh-CN":"切换语言","zh-HK":"切換語言","en":"Switch Language","id":"Ganti Bahasa"},
+    {"key":"login.title","zh-CN":"电动车租赁商户管理端","zh-HK":"電動車租賃商戶管理端","en":"E-Vehicle Rental Merchant APP","id":"Aplikasi Mitra Sewa E-Kendaraan"},
+    {"key":"home.alertCenter","zh-CN":"告警中心","zh-HK":"告警中心","en":"Alert Center","id":"Pusat Peringatan"},
+    {"key":"home.alertFilterClosed","zh-CN":"已关闭","zh-HK":"已關閉","en":"Closed","id":"Ditutup"},
+    {"key":"home.alertFilterIgnored","zh-CN":"已忽略","zh-HK":"已忽略","en":"Ignored","id":"Diabaikan"},
+    {"key":"home.alertFilterPending","zh-CN":"待处理","zh-HK":"待處理","en":"Pending","id":"Menunggu"},
+    {"key":"home.alertFilterProcessing","zh-CN":"处理中","zh-HK":"處理中","en":"Processing","id":"Diproses"},
+    {"key":"home.alertTypeAll","zh-CN":"全部类型","zh-HK":"全部類型","en":"All Types","id":"Semua Tipe"},
+    {"key":"home.alertTypeGpsLost","zh-CN":"GPS信号丢失","zh-HK":"GPS信號丟失","en":"GPS Signal Lost","id":"Sinyal GPS Hilang"},
+    {"key":"home.alertTypeGpsStale","zh-CN":"GPS定位过时","zh-HK":"GPS定位過時","en":"GPS Location Stale","id":"Posisi GPS Usang"},
+    {"key":"home.alertTypeOffline","zh-CN":"车辆离线","zh-HK":"車輛離線","en":"Vehicle Offline","id":"Kendaraan Offline"},
+    {"key":"home.alertTypePowerOff","zh-CN":"疑似断电","zh-HK":"疑似斷電","en":"Suspected Power Off","id":"Listrik Terputus"},
+    {"key":"home.bizStats.activeOrders","zh-CN":"进行中","zh-HK":"進行中","en":"In Progress","id":"Berlangsung"},
+    {"key":"home.bizStats.monthRevenue","zh-CN":"本月收款","zh-HK":"本月收款","en":"This Month's Revenue","id":"Pendapatan Bulan Ini"},
+    {"key":"home.bizStats.pendingReturn","zh-CN":"待归还","zh-HK":"待歸還","en":"Pending Return","id":"Menunggu Pengembalian"},
+    {"key":"home.bizStats.todayRevenue","zh-CN":"今日收款","zh-HK":"今日收款","en":"Today's Revenue","id":"Pendapatan Hari Ini"},
+    {"key":"home.bizStatsTitle","zh-CN":"经营数据","zh-HK":"經營數據","en":"Business Stats","id":"Data Bisnis"},
+    {"key":"home.noAlerts","zh-CN":"暂无告警","zh-HK":"暫無告警","en":"No Alerts","id":"Tidak ada peringatan"},
+    {"key":"home.noAlertsSub","zh-CN":"所有车辆运营正常","zh-HK":"所有車輛營運正常","en":"All vehicles are operating normally","id":"Semua kendaraan beroperasi normal"},
+    {"key":"home.noMatchingAlerts","zh-CN":"暂无匹配告警","zh-HK":"暫無匹配告警","en":"No matching alerts","id":"Tidak ada peringatan yang cocok"},
+    {"key":"home.noMatchingAlertsSub","zh-CN":"当前筛选下无匹配告警","zh-HK":"當前篩選下無匹配告警","en":"No alerts match the current filters","id":"Tidak ada peringatan yang cocok dengan filter saat ini"},
+    {"key":"home.noPendingAlerts","zh-CN":"暂无待处理告警","zh-HK":"暫無待處理告警","en":"No pending alerts","id":"Tidak ada peringatan menunggu diproses"},
+    {"key":"home.recentAlerts","zh-CN":"最近告警","zh-HK":"最近告警","en":"Recent Alerts","id":"Peringatan Terkini"},
+    {"key":"home.vehStats.offline","zh-CN":"离线车辆","zh-HK":"離線車輛","en":"Offline Vehicles","id":"Kendaraan Offline"},
+    {"key":"home.vehStats.online","zh-CN":"在线车辆","zh-HK":"在線車輛","en":"Online Vehicles","id":"Kendaraan Online"},
+    {"key":"home.vehStatsTitle","zh-CN":"车辆运营","zh-HK":"車輛營運","en":"Vehicle Operations","id":"Operasi Kendaraan"},
+    {"key":"home.viewAllAlerts","zh-CN":"全部","zh-HK":"全部","en":"All","id":"Semua"},
+    {"key":"alert.actionFindFromAlert","zh-CN":"一键寻车","zh-HK":"一鍵尋車","en":"Quick Find Vehicle","id":"Cari Kendaraan Sekali Ketuk"},
+    {"key":"alert.actionGoVehicle","zh-CN":"查看车辆","zh-HK":"查看車輛","en":"View Vehicle","id":"Lihat Kendaraan"},
+    {"key":"alert.actionIgnore","zh-CN":"忽略","zh-HK":"忽略","en":"Ignore","id":"Abaikan"},
+    {"key":"alert.actionResolve","zh-CN":"标记已处理","zh-HK":"標記已處理","en":"Mark Resolved","id":"Tandai Selesai"},
+    {"key":"alert.actionStartProcess","zh-CN":"开始处理","zh-HK":"開始處理","en":"Start Processing","id":"Mulai Proses"},
+    {"key":"alert.closeSource","zh-CN":"关闭方式","zh-HK":"關閉方式","en":"Close Source","id":"Metode Penutupan"},
+    {"key":"alert.closeSourceAuto","zh-CN":"自动恢复","zh-HK":"自動恢復","en":"Auto Recovered","id":"Pemulihan Otomatis"},
+    {"key":"alert.closeSourceManual","zh-CN":"人工处理","zh-HK":"人工處理","en":"Manual","id":"Manual"},
+    {"key":"alert.closed","zh-CN":"已关闭","zh-HK":"已關閉","en":"Closed","id":"Ditutup"},
+    {"key":"alert.closedTime","zh-CN":"关闭时间","zh-HK":"關閉時間","en":"Closed Time","id":"Waktu Ditutup"},
+    {"key":"alert.countSuffix","zh-CN":"次","zh-HK":"次","en":"times","id":"kali"},
+    {"key":"alert.detail","zh-CN":"告警详情","zh-HK":"告警詳情","en":"Alert Details","id":"Detail Peringatan"},
+    {"key":"alert.duration","zh-CN":"持续时间","zh-HK":"持續時間","en":"Duration","id":"Durasi"},
+    {"key":"alert.expandAll","zh-CN":"展开全部 {n} 条","zh-HK":"展開全部 {n} 條","en":"Expand all {n} records","id":"Buka semua {n} catatan"},
+    {"key":"alert.findFromAlertSub","zh-CN":"发送闪烁鸣笛指令","zh-HK":"發送閃爍鳴笛指令","en":"Send flash and honk command","id":"Kirim perintah kedip dan bunyi"},
+    {"key":"alert.findSent","zh-CN":"寻车指令已发送","zh-HK":"尋車指令已發送","en":"Find vehicle command sent","id":"Perintah cari kendaraan telah dikirim"},
+    {"key":"alert.firstTrigger","zh-CN":"首次触发","zh-HK":"首次觸發","en":"First Triggered","id":"Pemicu Pertama"},
+    {"key":"alert.goVehicleSub","zh-CN":"跳转车辆详情与车控","zh-HK":"跳轉車輛詳情與車控","en":"Go to vehicle details and controls","id":"Buka detail kendaraan dan kontrol"},
+    {"key":"alert.historyCount","zh-CN":"共 {n} 条","zh-HK":"共 {n} 條","en":"{n} records total","id":"Total {n} catatan"},
+    {"key":"alert.historyTitle","zh-CN":"历史记录","zh-HK":"歷史記錄","en":"History","id":"Riwayat"},
+    {"key":"alert.ignoreDesc","zh-CN":"请选择忽略原因，忽略后可从「已忽略」中查看。","zh-HK":"請選擇忽略原因，忽略後可從「已忽略」中查看。","en":"Please select an ignore reason. Ignored alerts can be found under \"Ignored\".","id":"Silakan pilih alasan pengabaian, setelah diabaikan dapat dilihat di \"Diabaikan\"."},
+    {"key":"alert.ignoreReason","zh-CN":"忽略原因","zh-HK":"忽略原因","en":"Ignore Reason","id":"Alasan Pengabaian"},
+    {"key":"alert.ignoreTitle","zh-CN":"忽略告警","zh-HK":"忽略","en":"Ignore","id":"Abaikan"},
+    {"key":"alert.lastLocation","zh-CN":"最后位置","zh-HK":"最後位置","en":"Last Location","id":"Lokasi Terakhir"},
+    {"key":"alert.lastTrigger","zh-CN":"最近触发","zh-HK":"最近觸發","en":"Last Triggered","id":"Pemicu Terakhir"},
+    {"key":"alert.levelHigh","zh-CN":"高","zh-HK":"高","en":"High","id":"Tinggi"},
+    {"key":"alert.levelLow","zh-CN":"低","zh-HK":"低","en":"Low","id":"Rendah"},
+    {"key":"alert.levelMid","zh-CN":"中","zh-HK":"中","en":"Medium","id":"Sedang"},
+    {"key":"alert.noHistory","zh-CN":"暂无记录","zh-HK":"暫無記錄","en":"No records","id":"Belum ada catatan"},
+    {"key":"alert.orderId","zh-CN":"关联订单","zh-HK":"關聯訂單","en":"Related Order","id":"Pesanan Terkait"},
+    {"key":"alert.startedProcess","zh-CN":"已开始处理","zh-HK":"已開始處理","en":"Processing started","id":"Mulai diproses"},
+    {"key":"alert.statusClosed","zh-CN":"已关闭","zh-HK":"已關閉","en":"Closed","id":"Ditutup"},
+    {"key":"alert.statusIgnored","zh-CN":"已忽略","zh-HK":"已忽略","en":"Ignored","id":"Diabaikan"},
+    {"key":"alert.statusPending","zh-CN":"待处理","zh-HK":"待處理","en":"Pending","id":"Menunggu"},
+    {"key":"alert.statusProcessing","zh-CN":"处理中","zh-HK":"處理中","en":"Processing","id":"Diproses"},
+    {"key":"alert.timelineClaimed","zh-CN":"开始处理","zh-HK":"開始處理","en":"Processing Started","id":"Mulai diproses"},
+    {"key":"alert.timelineClosed","zh-CN":"已关闭 · {source}","zh-HK":"已關閉 · {source}","en":"Closed · {source}","id":"Ditutup · {source}"},
+    {"key":"alert.timelineCollapse","zh-CN":"收起","zh-HK":"收起","en":"Collapse","id":"Lipat"},
+    {"key":"alert.timelineIgnored","zh-CN":"已忽略","zh-HK":"已忽略","en":"Ignored","id":"Diabaikan"},
+    {"key":"alert.timelineIgnoredReason","zh-CN":"已忽略 · {reason}","zh-HK":"已忽略 · {reason}","en":"Ignored · {reason}","id":"Diabaikan · {reason}"},
+    {"key":"alert.timelineOpened","zh-CN":"告警产生","zh-HK":"告警產生","en":"Alert Created","id":"Peringatan dibuat"},
+    {"key":"alert.timelineReopened","zh-CN":"重新打开为待处理","zh-HK":"重新打開為待處理","en":"Reopened as Pending","id":"Dibuka kembali ke menunggu"},
+    {"key":"alert.timelineTriggered","zh-CN":"第 {n} 次触发","zh-HK":"第 {n} 次觸發","en":"Triggered #{n}","id":"Pemicu ke-{n}"},
+    {"key":"alert.triggerCount","zh-CN":"触发次数","zh-HK":"觸發次數","en":"Trigger Count","id":"Jumlah Pemicu"},
+    {"key":"alert.triggerCountSuffix","zh-CN":"{n} 次","zh-HK":"{n} 次","en":"{n} times","id":"{n} kali"},
+    {"key":"alert.vin","zh-CN":"车架号","zh-HK":"車架號","en":"VIN","id":"Nomor rangka"},
+    {"key":"vehicles.actionArm","zh-CN":"设防","zh-HK":"設防","en":"Arm","id":"Aktifkan Keamanan"},
+    {"key":"vehicles.actionDisarm","zh-CN":"解除设防","zh-HK":"解除設防","en":"Disarm","id":"Nonaktifkan Keamanan"},
+    {"key":"vehicles.actionLost","zh-CN":"报失","zh-HK":"報失","en":"Report Lost","id":"Laporkan Hilang"},
+    {"key":"vehicles.actionUnlost","zh-CN":"解除报失","zh-HK":"解除報失","en":"Clear Lost","id":"Batalkan Laporan Hilang"},
+    {"key":"vehicles.add","zh-CN":"新增车辆","zh-HK":"新增車輛","en":"Add Vehicle","id":"Tambah Kendaraan"},
+    {"key":"vehicles.addFirstVehicle","zh-CN":"点击右下角 + 添加第一辆车辆","zh-HK":"點擊右下角 + 添加第一輛車輛","en":"Tap + in the bottom right to add your first vehicle","id":"Ketuk + di pojok kanan bawah untuk menambah kendaraan pertama"},
+    {"key":"vehicles.addSuccess","zh-CN":"新增成功","zh-HK":"新增成功","en":"Added successfully","id":"Berhasil ditambahkan"},
+    {"key":"vehicles.addVinPlaceholder","zh-CN":"请输入车架号","zh-HK":"請輸入車架號","en":"Enter VIN","id":"Masukkan nomor rangka"},
+    {"key":"vehicles.armSuccess","zh-CN":"设防成功","zh-HK":"設防成功","en":"Armed successfully","id":"Keamanan berhasil diaktifkan"},
+    {"key":"vehicles.batteryLevel","zh-CN":"电池电量","zh-HK":"電池電量","en":"Battery Level","id":"Level Baterai"},
+    {"key":"vehicles.batteryMainShort","zh-CN":"主","zh-HK":"主","en":"Main","id":"Utama"},
+    {"key":"vehicles.batterySubShort","zh-CN":"副","zh-HK":"副","en":"Sub","id":"Cadangan"},
+    {"key":"vehicles.clearFilter","zh-CN":"清除筛选","zh-HK":"清除篩選","en":"Clear Filter","id":"Hapus Filter"},
+    {"key":"vehicles.confirmArm","zh-CN":"车辆设防","zh-HK":"車輛設防","en":"Arm Vehicle","id":"Aktifkan Keamanan Kendaraan"},
+    {"key":"vehicles.confirmArmDesc","zh-CN":"确定对车辆设防？","zh-HK":"確定對車輛設防？","en":"Are you sure you want to arm this vehicle?","id":"Yakin aktifkan keamanan kendaraan?"},
+    {"key":"vehicles.confirmDisarm","zh-CN":"解除设防","zh-HK":"解除設防","en":"Disarm","id":"Nonaktifkan Keamanan"},
+    {"key":"vehicles.confirmDisarmDesc","zh-CN":"确定对车辆解除设防？","zh-HK":"確定對車輛解除設防？","en":"Are you sure you want to disarm this vehicle?","id":"Yakin nonaktifkan keamanan kendaraan?"},
+    {"key":"vehicles.confirmLost","zh-CN":"车辆报失","zh-HK":"車輛報失","en":"Report Vehicle Lost","id":"Laporkan Kendaraan Hilang"},
+    {"key":"vehicles.confirmLostDesc","zh-CN":"报失后车辆电机将被锁定，无法正常骑行","zh-HK":"確認對車輛進行報失？","en":"Are you sure you want to report this vehicle as lost?","id":"Yakin laporkan kendaraan ini hilang?"},
+    {"key":"vehicles.confirmUnlost","zh-CN":"解除报失","zh-HK":"解除報失","en":"Clear Lost","id":"Batalkan Laporan Hilang"},
+    {"key":"vehicles.confirmUnlostDesc","zh-CN":"解除报失后车辆电机将被解锁，恢复骑行","zh-HK":"確定對車輛解除報失？","en":"Are you sure you want to clear the lost status for this vehicle?","id":"Yakin batalkan laporan hilang kendaraan ini?"},
+    {"key":"vehicles.controller","zh-CN":"中控编号","zh-HK":"控制器號","en":"Controller No.","id":"Kontroler"},
+    {"key":"vehicles.controllerId","zh-CN":"中控编号","zh-HK":"中控編號","en":"Controller ID","id":"ID Pengendali"},
+    {"key":"vehicles.detail","zh-CN":"车辆详情","zh-HK":"車輛詳情","en":"Vehicle Details","id":"Detail Kendaraan"},
+    {"key":"vehicles.disarmSuccess","zh-CN":"解除设防成功","zh-HK":"解除設防成功","en":"Disarmed successfully","id":"Keamanan berhasil dinonaktifkan"},
+    {"key":"vehicles.distanceFromYou","zh-CN":"距您","zh-HK":"距您","en":"From you","id":"Jarak dari Anda"},
+    {"key":"vehicles.editVehicleInfo","zh-CN":"编辑车辆","zh-HK":"編輯車輛資訊","en":"Edit Vehicle Info","id":"Edit Info Kendaraan"},
+    {"key":"vehicles.enterControllerId","zh-CN":"请输入中控编号","zh-HK":"請輸入中控編號","en":"Enter controller ID","id":"Masukkan ID Pengendali"},
+    {"key":"vehicles.filterConfirm","zh-CN":"确定","zh-HK":"確定","en":"Confirm","id":"Konfirmasi"},
+    {"key":"vehicles.filterLost","zh-CN":"已报失","zh-HK":"已報失","en":"Reported Lost","id":"Dilaporkan Hilang"},
+    {"key":"vehicles.filterModel","zh-CN":"车型","zh-HK":"車型","en":"Model","id":"Model"},
+    {"key":"vehicles.filterOffline","zh-CN":"离线","zh-HK":"離線","en":"Offline","id":"Offline"},
+    {"key":"vehicles.filterOnline","zh-CN":"在线","zh-HK":"在線","en":"Online","id":"Online"},
+    {"key":"vehicles.findSent","zh-CN":"寻车指令已发送","zh-HK":"尋車指令已發送","en":"Find vehicle command sent","id":"Perintah cari kendaraan telah dikirim"},
+    {"key":"vehicles.findVehicle","zh-CN":"寻车","zh-HK":"尋車","en":"Find Vehicle","id":"Cari Kendaraan"},
+    {"key":"vehicles.findingVehicle","zh-CN":"寻车中...","zh-HK":"尋車中...","en":"Finding vehicle...","id":"Mencari kendaraan..."},
+    {"key":"vehicles.historyTrack","zh-CN":"历史轨迹","zh-HK":"歷史軌跡","en":"History Track","id":"Lintasan Historis"},
+    {"key":"vehicles.infoSaved","zh-CN":"车辆信息已保存","zh-HK":"車輛資料已儲存","en":"Vehicle information saved","id":"Info kendaraan telah disimpan"},
+    {"key":"vehicles.lastLocationUnknown","zh-CN":"最后位置未知","zh-HK":"最後位置未知","en":"Last location unknown","id":"Lokasi terakhir tidak diketahui"},
+    {"key":"vehicles.lastSignalTime","zh-CN":"最后信号时间","zh-HK":"最後信號時間","en":"Last Signal Time","id":"Waktu Sinyal Terakhir"},
+    {"key":"vehicles.location","zh-CN":"车辆位置","zh-HK":"車輛位置","en":"Vehicle Location","id":"Lokasi Kendaraan"},
+    {"key":"vehicles.locationLoading","zh-CN":"定位获取中…","zh-HK":"定位獲取中…","en":"Locating…","id":"Mengambil lokasi…"},
+    {"key":"vehicles.locked","zh-CN":"已锁","zh-HK":"已關鎖","en":"Locked","id":"Kunci Tertutup"},
+    {"key":"vehicles.lostSuccess","zh-CN":"报失成功","zh-HK":"報失成功","en":"Reported lost successfully","id":"Laporan hilang berhasil"},
+    {"key":"vehicles.meter","zh-CN":"米","zh-HK":"米","en":"m","id":"m"},
+    {"key":"vehicles.model","zh-CN":"车型","zh-HK":"車型","en":"Model","id":"Model"},
+    {"key":"vehicles.noLocationCount","zh-CN":"{n} 辆无定位","zh-HK":"{n} 輛無定位","en":"{n} without location","id":"{n} tanpa lokasi"},
+    {"key":"vehicles.noLocationTap","zh-CN":"暂无定位 · 点击查看","zh-HK":"暫無定位 · 點擊查看","en":"No location · Tap to view","id":"Belum ada lokasi · Ketuk untuk lihat"},
+    {"key":"vehicles.noMatchingAdjustSearch","zh-CN":"未找到匹配的车辆，请调整搜索条件","zh-HK":"未找到匹配的車輛，請調整搜尋條件","en":"No matching vehicles found, please adjust your search","id":"Kendaraan tidak ditemukan, silakan sesuaikan kata kunci pencarian"},
+    {"key":"vehicles.noResults","zh-CN":"暂无车辆","zh-HK":"暫無車輛","en":"No Vehicles","id":"Tidak ada kendaraan"},
+    {"key":"vehicles.noResultsSub","zh-CN":"还没有车辆数据","zh-HK":"還沒有車輛數據","en":"No vehicle data yet","id":"Belum ada data kendaraan"},
+    {"key":"vehicles.offline","zh-CN":"离线","zh-HK":"離線","en":"Offline","id":"Offline"},
+    {"key":"vehicles.online","zh-CN":"在线","zh-HK":"在線","en":"Online","id":"Online"},
+    {"key":"vehicles.operatingStatus","zh-CN":"运营状态","zh-HK":"營運狀態","en":"Operating Status","id":"Status Operasi"},
+    {"key":"vehicles.pressToLock","zh-CN":"长按关锁","zh-HK":"長按關鎖","en":"Long Press to Lock","id":"Tekan lama untuk mengunci"},
+    {"key":"vehicles.pressToUnlock","zh-CN":"长按开锁","zh-HK":"長按開鎖","en":"Long Press to Unlock","id":"Tekan lama untuk buka kunci"},
+    {"key":"vehicles.scanVinHint","zh-CN":"请将二维码对准取景框","zh-HK":"請將二維碼對準取景框","en":"Align the QR code with the frame","id":"Arahkan kode QR ke bingkai"},
+    {"key":"vehicles.searchModel","zh-CN":"搜索车型","zh-HK":"搜尋車型","en":"Search Model","id":"Cari Model"},
+    {"key":"vehicles.searchPlaceholder","zh-CN":"搜索车架号","zh-HK":"搜尋車架號","en":"Search VIN","id":"Cari nomor rangka"},
+    {"key":"vehicles.selectEndTime","zh-CN":"选择结束时间","zh-HK":"選擇結束時間","en":"Select End Time","id":"Pilih Waktu Selesai"},
+    {"key":"vehicles.selectModel","zh-CN":"选择车型","zh-HK":"選擇車型","en":"Select Model","id":"Pilih Model"},
+    {"key":"vehicles.selectModelType","zh-CN":"选择型号","zh-HK":"選擇型號","en":"Select Model","id":"Pilih Model"},
+    {"key":"vehicles.selectStartTime","zh-CN":"选择起始时间","zh-HK":"選擇起始時間","en":"Select Start Time","id":"Pilih Waktu Mulai"},
+    {"key":"vehicles.status","zh-CN":"状态","zh-HK":"狀態","en":"Status","id":"Status"},
+    {"key":"vehicles.statusIdle","zh-CN":"空闲","zh-HK":"閒置","en":"Idle","id":"Menganggur"},
+    {"key":"vehicles.statusOccupied","zh-CN":"占用中","zh-HK":"佔用中","en":"Occupied","id":"Terpakai"},
+    {"key":"vehicles.statusRented","zh-CN":"租用中","zh-HK":"租用中","en":"Rented","id":"Disewa"},
+    {"key":"vehicles.track","zh-CN":"车辆轨迹","zh-HK":"車輛軌跡","en":"Vehicle Track","id":"Lintasan Kendaraan"},
+    {"key":"vehicles.trackAdjustTimeRetry","zh-CN":"请调整起止时间后重试","zh-HK":"請調整起止時間後重試","en":"Please adjust the time range and try again","id":"Silakan sesuaikan waktu mulai dan selesai, lalu coba lagi"},
+    {"key":"vehicles.trackEndPin","zh-CN":"终","zh-HK":"終","en":"End","id":"Akhir"},
+    {"key":"vehicles.trackLoading","zh-CN":"轨迹加载中…","zh-HK":"軌跡載入中…","en":"Loading track…","id":"Memuat lintasan…"},
+    {"key":"vehicles.trackNoDataInPeriod","zh-CN":"该时段暂无轨迹","zh-HK":"該時段暫無軌跡","en":"No track data for this period","id":"Tidak ada lintasan pada periode ini"},
+    {"key":"vehicles.trackStartPin","zh-CN":"起","zh-HK":"起","en":"Start","id":"Mulai"},
+    {"key":"vehicles.unlocked","zh-CN":"未锁","zh-HK":"已開鎖","en":"Unlocked","id":"Kunci Terbuka"},
+    {"key":"vehicles.lockToastOpen","zh-CN":"已开锁","zh-HK":"已開鎖","en":"Unlocked","id":"Kunci Terbuka"},
+    {"key":"vehicles.lockToastClose","zh-CN":"已关锁","zh-HK":"已關鎖","en":"Locked","id":"Terkunci"},
+    {"key":"vehicles.unlostSuccess","zh-CN":"解除报失成功","zh-HK":"解除報失成功","en":"Lost status cleared","id":"Pembatalan laporan hilang berhasil"},
+    {"key":"vehicles.vehicleFilter","zh-CN":"全部筛选","zh-HK":"車輛篩選","en":"Vehicle Filter","id":"Filter Kendaraan"},
+    {"key":"vehicles.viewDetail","zh-CN":"查看详情","zh-HK":"查看詳情","en":"View Details","id":"Lihat Detail"},
+    {"key":"vehicles.vin","zh-CN":"车架号","zh-HK":"車架號","en":"VIN","id":"Nomor rangka"},
+    {"key":"vehicles.walk","zh-CN":"步行","zh-HK":"步行","en":"Walk","id":"Berjalan"},
+    {"key":"vehicles.walkMin","zh-CN":"分钟","zh-HK":"分鐘","en":"min","id":"menit"},
+    {"key":"orders.actionRefund","zh-CN":"执行退款","zh-HK":"執行退款","en":"Process Refund","id":"Lakukan Pengembalian Dana"},
+    {"key":"orders.actionReturn","zh-CN":"结束订单","zh-HK":"歸還車輛","en":"Return Vehicle","id":"Kembalikan Kendaraan"},
+    {"key":"orders.cancelOrder","zh-CN":"取消订单","zh-HK":"取消訂單","en":"Cancel Order","id":"Batalkan Pesanan"},
+    {"key":"orders.finishTime","zh-CN":"完成时间","zh-HK":"完成時間","en":"Finish Time","id":"Waktu Selesai"},
+    {"key":"orders.cancelTime","zh-CN":"取消时间","zh-HK":"取消時間","en":"Cancellation Time","id":"Waktu Pembatalan"},
+    {"key":"orders.confirmCancelDesc","zh-CN":"确定取消该订单？取消后不可恢复","zh-HK":"確定取消該訂單？","en":"Are you sure you want to cancel this order?","id":"Yakin batalkan pesanan ini?"},
+    {"key":"orders.confirmCancelTitle","zh-CN":"取消订单","zh-HK":"取消訂單","en":"Cancel Order","id":"Batalkan Pesanan"},
+    {"key":"orders.confirmLostDesc","zh-CN":"报失后车辆电机将被锁定，无法正常骑行","zh-HK":"確認對訂單內車輛執行報失？","en":"Are you sure you want to report the vehicle in this order as lost?","id":"Yakin laporkan kendaraan dalam pesanan ini hilang?"},
+    {"key":"orders.confirmLostTitle","zh-CN":"车辆报失","zh-HK":"車輛報失","en":"Report Vehicle Lost","id":"Laporkan Kendaraan Hilang"},
+    {"key":"orders.confirmPay","zh-CN":"线下支付","zh-HK":"線下支付","en":"Offline Payment","id":"Pembayaran Offline"},
+    {"key":"orders.confirmPayDesc","zh-CN":"确认用户已完成线下支付？","zh-HK":"確認用戶已完成線下支付？","en":"Are you sure the user has completed the offline payment?","id":"Yakin pengguna telah menyelesaikan pembayaran offline?"},
+    {"key":"orders.confirmPayTitle","zh-CN":"线下支付","zh-HK":"線下支付","en":"Offline Payment","id":"Pembayaran Offline"},
+    {"key":"orders.confirmRefundDesc","zh-CN":"确认结束订单？合计退款 Rp{total}","zh-HK":"合計退款 ¥{total}，確定{action}？","en":"Total refund ¥{total}, confirm {action}?","id":"Total pengembalian ¥{total}, yakin {action}?"},
+    {"key":"orders.confirmRefundTitle","zh-CN":"结束订单","zh-HK":"訂單退款","en":"Order Refund","id":"Pengembalian Dana Pesanan"},
+    {"key":"orders.confirmReturnTitle","zh-CN":"结束订单","zh-HK":"歸還車輛","en":"Return Vehicle","id":"Kembalikan Kendaraan"},
+    {"key":"orders.confirmUnlostDesc","zh-CN":"解除报失后车辆电机将被解锁，恢复骑行","zh-HK":"確定解除訂單內車輛的報失？","en":"Are you sure you want to clear the lost status for the vehicle in this order?","id":"Yakin batalkan status hilang kendaraan dalam pesanan ini?"},
+    {"key":"orders.confirmUnlostTitle","zh-CN":"解除报失","zh-HK":"解除報失","en":"Clear Lost","id":"Batalkan Laporan Hilang"},
+    {"key":"orders.customer","zh-CN":"用户账号","zh-HK":"客戶姓名","en":"Customer Name","id":"Nama Pelanggan"},
+    {"key":"orders.customerDocs","zh-CN":"用户资料","zh-HK":"客戶資料","en":"Customer Documents","id":"Dokumen Pelanggan"},
+    {"key":"orders.customerDocsTitle","zh-CN":"用户资料","zh-HK":"客戶資料","en":"Customer Documents","id":"Dokumen Pelanggan"},
+    {"key":"orders.datePickerConfirm","zh-CN":"确定","zh-HK":"確定","en":"Confirm","id":"Konfirmasi"},
+    {"key":"orders.datePickerDay","zh-CN":"日","zh-HK":"日","en":"Day","id":"Tanggal"},
+    {"key":"orders.datePickerEnd","zh-CN":"选择结束日期","zh-HK":"選擇結束日期","en":"Select end date","id":"Pilih tanggal selesai"},
+    {"key":"orders.datePickerMonth","zh-CN":"月","zh-HK":"月","en":"Month","id":"Bulan"},
+    {"key":"orders.datePickerStart","zh-CN":"选择开始日期","zh-HK":"選擇開始日期","en":"Select start date","id":"Pilih tanggal mulai"},
+    {"key":"orders.datePickerYear","zh-CN":"年","zh-HK":"年","en":"Year","id":"Tahun"},
+    {"key":"orders.deposit","zh-CN":"押金","zh-HK":"押金","en":"Deposit","id":"Jaminan"},
+    {"key":"orders.detail","zh-CN":"订单详情","zh-HK":"訂單詳情","en":"Order Details","id":"Detail Pesanan"},
+    {"key":"orders.docAddButton","zh-CN":"添加资料","zh-HK":"添加資料","en":"Add Document","id":"Tambah Dokumen"},
+    {"key":"orders.docAddEditMode","zh-CN":"点击下方按钮添加用户资料","zh-HK":"點擊下方按鈕添加客戶資料","en":"Tap the button below to add customer documents","id":"Ketuk tombol di bawah untuk menambah dokumen pelanggan"},
+    {"key":"orders.docContract","zh-CN":"合同","zh-HK":"合約","en":"Contract","id":"Kontrak"},
+    {"key":"orders.docCount","zh-CN":"{n} 份资料","zh-HK":"{n} 份資料","en":"{n} documents","id":"{n} dokumen"},
+    {"key":"orders.docDeleteDesc","zh-CN":"确定删除该资料？删除后不可恢复。","zh-HK":"確定刪除該資料？刪除後不可恢復。","en":"Are you sure you want to delete this document? This action cannot be undone.","id":"Yakin hapus dokumen ini? Tidak dapat dibatalkan setelah dihapus."},
+    {"key":"orders.docDeleteTitle","zh-CN":"删除资料","zh-HK":"刪除資料","en":"Delete Document","id":"Hapus Dokumen"},
+    {"key":"orders.docIdCard","zh-CN":"身份证","zh-HK":"身份證","en":"ID Card","id":"KTP"},
+    {"key":"orders.docLicense","zh-CN":"驾驶证","zh-HK":"駕駛證","en":"Driver's License","id":"SIM"},
+    {"key":"orders.docNoDataYet","zh-CN":"暂无用户资料","zh-HK":"暫無客戶資料","en":"No customer documents yet","id":"Belum ada dokumen pelanggan"},
+    {"key":"orders.docOther","zh-CN":"其他","zh-HK":"其他","en":"Other","id":"Lainnya"},
+    {"key":"orders.docSheetPhoto","zh-CN":"拍照上传","zh-HK":"拍照上傳","en":"Take Photo","id":"Ambil Foto"},
+    {"key":"orders.docSheetText","zh-CN":"文本资料","zh-HK":"文本資料","en":"Text Material","id":"Materi Teks"},
+    {"key":"orders.docSheetTitle","zh-CN":"添加用户资料","zh-HK":"添加客戶資料","en":"Add Customer Document","id":"Tambah Dokumen Pelanggan"},
+    {"key":"orders.docTextPlaceholder","zh-CN":"请输入备注内容...","zh-HK":"請輸入備註內容...","en":"Enter note content...","id":"Masukkan catatan..."},
+    {"key":"orders.docViewOnlyMode","zh-CN":"当前状态仅支持查看","zh-HK":"當前狀態僅支持查看","en":"Only viewing is supported in the current status","id":"Status saat ini hanya mendukung melihat"},
+    {"key":"orders.filterConfirm","zh-CN":"确定","zh-HK":"確定","en":"Confirm","id":"Konfirmasi"},
+    {"key":"orders.filterCreateDate","zh-CN":"创建时间","zh-HK":"建立時間","en":"Created Date","id":"Waktu Dibuat"},
+    {"key":"orders.filterDateTo","zh-CN":"至","zh-HK":"至","en":"to","id":"sampai"},
+    {"key":"orders.filterPayStatus","zh-CN":"支付状态","zh-HK":"支付狀態","en":"Payment Status","id":"Status Pembayaran"},
+    {"key":"orders.filterPaymentChannel","zh-CN":"支付渠道","zh-HK":"支付渠道","en":"Payment Channel","id":"Saluran Pembayaran"},
+    {"key":"orders.filterSheetTitle","zh-CN":"全部筛选","zh-HK":"訂單篩選","en":"Order Filter","id":"Filter Pesanan"},
+    {"key":"orders.filterStatus","zh-CN":"订单状态","zh-HK":"訂單狀態","en":"Order Status","id":"Status Pesanan"},
+    {"key":"orders.idCopied","zh-CN":"订单编号已复制","zh-HK":"訂單編號已複製","en":"Order number copied","id":"Nomor pesanan telah disalin"},
+    {"key":"orders.imagePreviewClose","zh-CN":"轻触任意位置关闭","zh-HK":"輕觸任意位置關閉","en":"Tap anywhere to close","id":"Ketuk di mana saja untuk menutup"},
+    {"key":"orders.lostSuccess","zh-CN":"报失成功","zh-HK":"報失成功","en":"Reported lost successfully","id":"Laporan hilang berhasil"},
+    {"key":"orders.noResults.vehicle","zh-CN":"暂无车辆订单","zh-HK":"暫無車輛訂單","en":"No Vehicle Orders","id":"Tidak ada pesanan kendaraan"},
+    {"key":"orders.noResults.battery","zh-CN":"暂无电池订单","zh-HK":"暫無電池訂單","en":"No Battery Orders","id":"Tidak ada pesanan baterai"},
+    {"key":"orders.noResults.package","zh-CN":"暂无套餐订单","zh-HK":"暫無套餐訂單","en":"No Package Orders","id":"Tidak ada pesanan paket"},
+    {"key":"orders.noResultsFiltered","zh-CN":"当前筛选下无匹配订单","zh-HK":"當前篩選下無匹配訂單","en":"No matching orders under current filters","id":"Tidak ada pesanan yang cocok dengan filter saat ini"},
+    {"key":"orders.noResultsSub","zh-CN":"还没有订单数据","zh-HK":"還沒有訂單數據","en":"No order data yet","id":"Belum ada data pesanan"},
+    {"key":"orders.orderCancelled","zh-CN":"订单已取消","zh-HK":"訂單已取消","en":"Order cancelled","id":"Pesanan telah dibatalkan"},
+    {"key":"orders.orderId","zh-CN":"订单编号","zh-HK":"訂單編號","en":"Order Number","id":"Nomor Pesanan"},
+    {"key":"orders.paidAmount","zh-CN":"实付金额","zh-HK":"實付金額","en":"Amount Paid","id":"Jumlah Dibayar"},
+    {"key":"orders.payConfirmed","zh-CN":"支付确认成功","zh-HK":"支付確認成功","en":"Payment confirmed successfully","id":"Konfirmasi pembayaran berhasil"},
+    {"key":"orders.payFullRefund","zh-CN":"全部退款","zh-HK":"全額退款","en":"Full Refund","id":"Pengembalian Penuh"},
+    {"key":"orders.payPaid","zh-CN":"已支付","zh-HK":"已支付","en":"Paid","id":"Sudah Dibayar"},
+    {"key":"orders.payPartialRefund","zh-CN":"部分退款","zh-HK":"部分退款","en":"Partial Refund","id":"Pengembalian Sebagian"},
+    {"key":"orders.payPending","zh-CN":"待支付","zh-HK":"待支付","en":"Pending Payment","id":"Menunggu Pembayaran"},
+    {"key":"orders.payProcessing","zh-CN":"支付中","zh-HK":"支付中","en":"Processing","id":"Pembayaran Diproses"},
+    {"key":"orders.payRefunding","zh-CN":"退款中","zh-HK":"退款中","en":"Refunding","id":"Pengembalian Dana Diproses"},
+    {"key":"orders.payStatus","zh-CN":"支付状态","zh-HK":"支付狀態","en":"Payment Status","id":"Status Pembayaran"},
+    {"key":"orders.payTime","zh-CN":"支付时间","zh-HK":"支付時間","en":"Payment Time","id":"Waktu Pembayaran"},
+    {"key":"orders.payment","zh-CN":"支付方式","zh-HK":"支付方式","en":"Payment Method","id":"Metode Pembayaran"},
+    {"key":"orders.payment2c2p","zh-CN":"2C2P","zh-HK":"2C2P","en":"2C2P","id":"2C2P"},
+    {"key":"orders.paymentOffline","zh-CN":"线下支付","zh-HK":"線下支付","en":"Offline Payment","id":"Pembayaran Offline"},
+    {"key":"orders.plan","zh-CN":"租赁方案","zh-HK":"租賃方案","en":"Rental Plan","id":"Paket Sewa"},
+    {"key":"orders.planMonthly","zh-CN":"月租","zh-HK":"月租","en":"Monthly Rental","id":"Sewa Bulanan"},
+    {"key":"orders.planMonthlyMonths","zh-CN":"月租×{n}月","zh-HK":"月租×{n}月","en":"Rental × {n} Months","id":"Sewa Bulanan × {n} Bulan"},
+    {"key":"orders.quickOverdue","zh-CN":"已超期","zh-HK":"已超期","en":"Overdue","id":"Terlambat"},
+    {"key":"orders.quickPending","zh-CN":"待取用","zh-HK":"待取用","en":"Awaiting Pickup","id":"Menunggu Pengambilan"},
+    {"key":"orders.quickProgress","zh-CN":"进行中","zh-HK":"進行中","en":"In Progress","id":"Berlangsung"},
+    {"key":"orders.quickReturn","zh-CN":"待归还","zh-HK":"待歸還","en":"Pending Return","id":"Menunggu Pengembalian"},
+    {"key":"orders.refund","zh-CN":"退款","zh-HK":"退款","en":"Refund","id":"Pengembalian Dana"},
+    {"key":"orders.refundChannelOffline","zh-CN":"原路退回 · 线下支付","zh-HK":"原路退回 · 線下支付","en":"Refund to Original Payment Method · Offline Payment","id":"Dikembalikan ke Metode Pembayaran Asal · Pembayaran Offline"},
+    {"key":"orders.refundChannelOnline","zh-CN":"原路退回 · 2C2P","zh-HK":"原路退回 · 2C2P","en":"Refund to Original Payment Method · 2C2P","id":"Dikembalikan ke Metode Pembayaran Asal · 2C2P"},
+    {"key":"orders.refundCompleted","zh-CN":"退款已完成","zh-HK":"退款已完成","en":"Refund completed","id":"Pengembalian dana selesai"},
+    {"key":"orders.refundCurrentOperator","zh-CN":"当前账号","zh-HK":"當前帳號","en":"Current Account","id":"Akun Saat Ini"},
+    {"key":"orders.refundDeposit","zh-CN":"押金","zh-HK":"押金","en":"Refund Deposit","id":"Pengembalian Deposit"},
+    {"key":"orders.refundEmptySub","zh-CN":"该订单尚未产生退款","zh-HK":"該訂單尚未產生退款","en":"No refunds have been made for this order","id":"Pesanan ini belum menghasilkan pengembalian dana"},
+    {"key":"orders.refundEmptyTitle","zh-CN":"暂无退款记录","zh-HK":"暫無退款記錄","en":"No refund records","id":"Belum ada riwayat pengembalian dana"},
+    {"key":"orders.refundFailed","zh-CN":"退款失败","zh-HK":"退款失敗","en":"Refund Failed","id":"Pengembalian Dana Gagal"},
+    {"key":"orders.refundModalDepositLimit","zh-CN":"可退 {amount}","zh-HK":"可退 {amount}","en":"Refundable Cap {amount}","id":"Maks Pengembalian {amount}"},
+    {"key":"orders.refundModalReasonPlaceholder","zh-CN":"请输入退款原因...","zh-HK":"請輸入退款原因...","en":"Enter refund reason...","id":"Masukkan alasan pengembalian dana..."},
+    {"key":"orders.refundModalRentLimit","zh-CN":"可退 {amount}","zh-HK":"可退 {amount}","en":"Refundable Cap {amount}","id":"Maks Pengembalian {amount}"},
+    {"key":"orders.refundModalTotalLabel","zh-CN":"合计退款","zh-HK":"合計退款","en":"Total Refund","id":"Total Pengembalian"},
+    {"key":"orders.refundModeReturn","zh-CN":"归还","zh-HK":"歸還","en":"Return","id":"Pengembalian"},
+    {"key":"orders.refundOperator","zh-CN":"操作账号","zh-HK":"操作帳號","en":"Operator","id":"Akun Operasi"},
+    {"key":"orders.refundProcessing","zh-CN":"退款中","zh-HK":"退款中","en":"Refunding","id":"Pengembalian Dana Diproses"},
+    {"key":"orders.refundReason","zh-CN":"退款原因","zh-HK":"退款原因","en":"Refund Reason","id":"Alasan Pengembalian Dana"},
+    {"key":"orders.refundReasonLabel","zh-CN":"原因","zh-HK":"原因","en":"Reason","id":"Alasan"},
+    {"key":"orders.refundReasonUserDeposit","zh-CN":"用户主动申请押金退还","zh-HK":"用戶主動申請押金退還","en":"User requested deposit refund","id":"Pengguna mengajukan pengembalian deposit"},
+    {"key":"orders.refundRecords","zh-CN":"退款记录","zh-HK":"退款記錄","en":"Refund Records","id":"Riwayat Pengembalian Dana"},
+    {"key":"orders.refundRent","zh-CN":"租金","zh-HK":"租金","en":"Refund Rent","id":"Pengembalian Sewa"},
+    {"key":"orders.refundSource","zh-CN":"来源","zh-HK":"來源","en":"Source","id":"Sumber"},
+    {"key":"orders.refundSourceMerchant","zh-CN":"商户端","zh-HK":"商戶端","en":"Merchant APP","id":"Aplikasi Mitra"},
+    {"key":"orders.refundSourcePlatform","zh-CN":"运营平台","zh-HK":"營運平台","en":"Operations Platform","id":"Platform Operasi"},
+    {"key":"orders.refundSourceReturn","zh-CN":"归还","zh-HK":"歸還","en":"Return","id":"Pengembalian"},
+    {"key":"orders.refundSourceUser","zh-CN":"用户端","zh-HK":"用戶端","en":"User App","id":"Aplikasi Pengguna"},
+    {"key":"orders.refundSuccess","zh-CN":"退款成功","zh-HK":"退款成功","en":"Refund Successful","id":"Pengembalian Dana Berhasil"},
+    {"key":"orders.rent","zh-CN":"租金","zh-HK":"租金","en":"Rent","id":"Sewa"},
+    {"key":"orders.reportLost","zh-CN":"车辆报失","zh-HK":"車輛報失","en":"Report Vehicle Lost","id":"Laporkan Kendaraan Hilang"},
+    {"key":"orders.reportUnlost","zh-CN":"解除报失","zh-HK":"解除報失","en":"Clear Lost","id":"Batalkan Laporan Hilang"},
+    {"key":"orders.returnVehicle","zh-CN":"结束订单","zh-HK":"歸還車輛","en":"Return Vehicle","id":"Kembalikan Kendaraan"},
+    {"key":"orders.searchId","zh-CN":"订单号","zh-HK":"訂單號","en":"Order number","id":"Nomor pesanan"},
+    {"key":"orders.searchVin","zh-CN":"车架号","zh-HK":"車架號","en":"VIN","id":"Nomor rangka"},
+    {"key":"orders.searchBattNo","zh-CN":"电池编号","zh-HK":"電池編號","en":"Battery No.","id":"Nomor Baterai"},
+    {"key":"orders.status","zh-CN":"订单状态","zh-HK":"訂單狀態","en":"Order Status","id":"Status Pesanan"},
+    {"key":"orders.statusBreach","zh-CN":"已违约","zh-HK":"已違約","en":"Breached","id":"Pelanggaran"},
+    {"key":"orders.statusCancelled","zh-CN":"已取消","zh-HK":"已取消","en":"Cancelled","id":"Dibatalkan"},
+    {"key":"orders.statusComplete","zh-CN":"已完成","zh-HK":"已完成","en":"Completed","id":"Selesai"},
+    {"key":"orders.statusCreated","zh-CN":"已创建","zh-HK":"已建立","en":"Created","id":"Dibuat"},
+    {"key":"orders.statusOverdue","zh-CN":"已超期","zh-HK":"已超期","en":"Overdue","id":"Terlambat"},
+    {"key":"orders.statusPickup","zh-CN":"待取用","zh-HK":"待取用","en":"Awaiting Pickup","id":"Menunggu Pengambilan"},
+    {"key":"orders.statusProgress","zh-CN":"进行中","zh-HK":"進行中","en":"In Progress","id":"Berlangsung"},
+    {"key":"orders.statusReturn","zh-CN":"待归还","zh-HK":"待歸還","en":"Pending Return","id":"Menunggu Pengembalian"},
+    {"key":"orders.timeApptPickup","zh-CN":"预约取车","zh-HK":"預約取車","en":"Scheduled Pickup","id":"Janji Ambil"},
+    {"key":"orders.timeCancel","zh-CN":"取消","zh-HK":"取消","en":"Cancelled","id":"Dibatalkan"},
+    {"key":"orders.timeDueReturn","zh-CN":"应还","zh-HK":"應還","en":"Return Due","id":"Jatuh Tempo"},
+    {"key":"orders.timeOrdered","zh-CN":"下单","zh-HK":"下單","en":"Ordered","id":"Dipesan"},
+    {"key":"orders.timePickup","zh-CN":"取车","zh-HK":"取車","en":"Pickup","id":"Diambil"},
+    {"key":"orders.timeReturn","zh-CN":"归还","zh-HK":"歸還","en":"Return","id":"Pengembalian"},
+    {"key":"orders.unlostSuccess","zh-CN":"解除报失成功","zh-HK":"解除報失成功","en":"Lost status cleared","id":"Pembatalan laporan hilang berhasil"},
+    {"key":"orders.vehicleOnline","zh-CN":"在线","zh-HK":"在線","en":"Online","id":"Online"},
+    {"key":"orders.vehicleReturned","zh-CN":"车辆已归还","zh-HK":"車輛已歸還","en":"Vehicle returned","id":"Kendaraan telah dikembalikan"},
+    {"key":"orders.vinLabel","zh-CN":"车架号：","zh-HK":"車架號：","en":"VIN: ","id":"Nomor Rangka:"},
+    {"key":"orders.typeVehicle","zh-CN":"车辆租赁","zh-HK":"車輛租賃","en":"Vehicle Rental","id":"Sewa Kendaraan"},
+    {"key":"orders.typeBattery","zh-CN":"电池租赁","zh-HK":"電池租賃","en":"Battery Rental","id":"Sewa Baterai"},
+    {"key":"orders.typePackage","zh-CN":"车电套餐","zh-HK":"車電套餐","en":"Vehicle & Battery Package","id":"Paket Kendaraan & Baterai"},
+    {"key":"orders.createdTime","zh-CN":"创建时间","zh-HK":"建立時間","en":"Created Time","id":"Waktu Dibuat"},
+    {"key":"orders.listVehicle","zh-CN":"车辆订单列表","zh-HK":"車輛訂單列表","en":"Vehicle Order List","id":"Daftar Pesanan Kendaraan"},
+    {"key":"orders.listBattery","zh-CN":"电池订单列表","zh-HK":"電池訂單列表","en":"Battery Order List","id":"Daftar Pesanan Baterai"},
+    {"key":"orders.listPackage","zh-CN":"套餐订单列表","zh-HK":"套餐訂單列表","en":"Package Order List","id":"Daftar Pesanan Paket"},
+    {"key":"orders.listTitle","zh-CN":"订单列表","zh-HK":"訂單列表","en":"Order List","id":"Daftar Pesanan"},
+    {"key":"profile.accountAdd","zh-CN":"新增账号","zh-HK":"新增帳號","en":"Add Account","id":"Tambah Akun"},
+    {"key":"profile.accountAddSuccess","zh-CN":"账号创建成功","zh-HK":"帳號建立成功","en":"Account created successfully","id":"Akun berhasil dibuat"},
+    {"key":"profile.accountCopied","zh-CN":"账号已复制","zh-HK":"帳號已複製","en":"Account copied","id":"Akun telah disalin"},
+    {"key":"profile.accountCredHint","zh-CN":"请妥善保管以下账号信息","zh-HK":"請妥善保管以下帳號資訊","en":"Please keep the following account information safe","id":"Silakan simpan informasi akun berikut dengan baik"},
+    {"key":"profile.accountCredPassword","zh-CN":"初始密码","zh-HK":"初始密碼","en":"Initial Password","id":"Kata Sandi Awal"},
+    {"key":"profile.accountDetail","zh-CN":"账号详情","zh-HK":"帳號詳情","en":"Account Details","id":"Detail Akun"},
+    {"key":"profile.accountEdit","zh-CN":"编辑账号","zh-HK":"編輯帳號","en":"Edit Account","id":"Edit Akun"},
+    {"key":"profile.accountError","zh-CN":"请输入账号","zh-HK":"請輸入帳號","en":"Please enter account","id":"Masukkan akun"},
+    {"key":"profile.accountFormatError","zh-CN":"账号必须以字母开头，长度为 4–20 位","zh-HK":"帳號必須以字母開頭，長度為4-20位","en":"Account must start with a letter and be 4-20 characters","id":"Akun harus diawali huruf, panjang 4-20 karakter"},
+    {"key":"profile.accountInputPlaceholder","zh-CN":"请输入账号","zh-HK":"請輸入帳號","en":"Enter account","id":"Masukkan akun"},
+    {"key":"profile.accountManage","zh-CN":"账号管理","zh-HK":"帳號管理","en":"Account Management","id":"Manajemen Akun"},
+    {"key":"profile.accountNoDataSub","zh-CN":"点击右上角新增账号","zh-HK":"點擊右上角新增帳號","en":"Tap the top right corner to add an account","id":"Ketuk pojok kanan atas untuk menambah akun"},
+    {"key":"profile.accountSaved","zh-CN":"账号已保存","zh-HK":"帳號已儲存","en":"Account saved","id":"Akun disimpan"},
+    {"key":"profile.accountSearch","zh-CN":"搜索账号/姓名/手机号","zh-HK":"搜尋帳號/姓名/手機號","en":"Search account/name/phone","id":"Cari akun/nama/nomor ponsel"},
+    {"key":"profile.accountStatusChanged","zh-CN":"账号状态已{status}","zh-HK":"帳號狀態已{status}","en":"Account {status}","id":"Status akun {status}"},
+    {"key":"profile.addSubPosition","zh-CN":"新增下级职位","zh-HK":"新增下級職位","en":"Add Sub-position","id":"Tambah Posisi Bawahan"},
+    {"key":"profile.adjustAccountSearch","zh-CN":"请调整搜索关键词","zh-HK":"請調整搜尋關鍵詞","en":"Please adjust your search keywords","id":"Silakan sesuaikan kata kunci pencarian"},
+    {"key":"profile.adjustModelSearch","zh-CN":"请调整搜索关键词","zh-HK":"請調整搜尋關鍵詞","en":"Please adjust your search keywords","id":"Silakan sesuaikan kata kunci pencarian"},
+    {"key":"profile.adjustPositionSearch","zh-CN":"请调整搜索关键词","zh-HK":"請調整搜尋關鍵詞","en":"Please adjust your search keywords","id":"Silakan sesuaikan kata kunci pencarian"},
+    {"key":"profile.avatar","zh-CN":"头像","zh-HK":"頭像","en":"Avatar","id":"Foto Profil"},
+    {"key":"profile.basicInfo","zh-CN":"基本信息","zh-HK":"基本資訊","en":"Basic Information","id":"Info Dasar"},
+    {"key":"profile.feeDetail","zh-CN":"费用明细","zh-HK":"費用明細","en":"Fee Details","id":"Detail Biaya"},
+    {"key":"profile.total","zh-CN":"合计","zh-HK":"合計","en":"Total","id":"Total"},
+    {"key":"profile.rentTime","zh-CN":"租赁时间","zh-HK":"租賃時間","en":"Rental Time","id":"Waktu Sewa"},
+    {"key":"profile.bind","zh-CN":"绑定","zh-HK":"綁定","en":"Bind","id":"Hubungkan"},
+    {"key":"profile.bindEmail","zh-CN":"绑定邮箱","zh-HK":"綁定電郵","en":"Bind Email","id":"Hubungkan Email"},
+    {"key":"profile.bindNewEmail","zh-CN":"绑定邮箱","zh-HK":"綁定電郵","en":"Bind Email","id":"Hubungkan Email"},
+    {"key":"profile.bindNewPhone","zh-CN":"绑定手机号","zh-HK":"綁定手機號","en":"Bind Phone","id":"Hubungkan Ponsel"},
+    {"key":"profile.bindPhone","zh-CN":"绑定手机号","zh-HK":"綁定手機號","en":"Bind Phone","id":"Hubungkan Ponsel"},
+    {"key":"profile.bothCopied","zh-CN":"账号和密码已复制","zh-HK":"帳號和密碼已複製","en":"Account and password copied","id":"Akun dan kata sandi telah disalin"},
+    {"key":"profile.changePassword","zh-CN":"修改密码","zh-HK":"修改密碼","en":"Change Password","id":"Ubah Kata Sandi"},
+    {"key":"profile.codePlaceholder","zh-CN":"请输入验证码","zh-HK":"請輸入驗證碼","en":"Enter verification code","id":"Masukkan kode verifikasi"},
+    {"key":"profile.commonFunctions","zh-CN":"常用功能","zh-HK":"常用功能","en":"Common Functions","id":"Fungsi Umum"},
+    {"key":"profile.configBreachHint","zh-CN":"到达设定超期天数后订单自动切换为已违约状态，车辆远程开锁功能锁定","zh-HK":"到達設定超期天數後訂單自動切換為已違約狀態，車輛遠程開鎖功能鎖定","en":"After the set overdue days, the order automatically switches to Breached status, and the remote unlock function is disabled","id":"Setelah mencapai jumlah hari keterlambatan yang diatur, pesanan otomatis beralih ke status Pelanggaran, fungsi buka kunci jarak jauh dikunci"},
+    {"key":"profile.configBreachLabel","zh-CN":"订单超期","zh-HK":"訂單超期","en":"Order overdue","id":"Pesanan terlambat"},
+    {"key":"profile.configBreachSuffix","zh-CN":"天状态变更至已违约且不可开锁","zh-HK":"天狀態變更至已違約且不可開鎖","en":"day(s), status changes to Breached and unlock disabled","id":"hari, status berubah ke Pelanggaran dan kunci tidak dapat dibuka"},
+    {"key":"profile.configPreHint","zh-CN":"租期到期前自动转为待归还状态，提醒用户及时归还","zh-HK":"租期到期前自動轉為待歸還狀態，提醒用戶及時歸還","en":"Automatically changes to Pending Return status before the rental period expires, reminding users to return on time","id":"Otomatis berubah ke status Menunggu Pengembalian sebelum masa sewa berakhir, mengingatkan pengguna untuk mengembalikan tepat waktu"},
+    {"key":"profile.configPreLabel","zh-CN":"订单结束前","zh-HK":"訂單結束前","en":"Before order ends","id":"Sebelum pesanan berakhir"},
+    {"key":"profile.configPreSuffix","zh-CN":"天状态变更至待归还","zh-HK":"天狀態變更至待歸還","en":"day(s), status changes to Pending Return","id":"hari, status berubah ke Menunggu Pengembalian"},
+    {"key":"profile.configSaved","zh-CN":"配置已保存","zh-HK":"設定已儲存","en":"Configuration saved","id":"Konfigurasi telah disimpan"},
+    {"key":"profile.confirmDeleteCSDesc","zh-CN":"确定删除该客服信息？删除后不可恢复。","zh-HK":"確定刪除該客服資訊？刪除後不可恢復。","en":"Are you sure you want to delete this customer service info? This action cannot be undone.","id":"Yakin hapus info layanan pelanggan ini? Tidak dapat dibatalkan setelah dihapus."},
+    {"key":"profile.confirmDeleteCSTitle","zh-CN":"删除客服","zh-HK":"刪除客服","en":"Delete Customer Service","id":"Hapus Layanan Pelanggan"},
+    {"key":"profile.confirmDeletePosition","zh-CN":"删除职位","zh-HK":"刪除職位","en":"Delete Position","id":"Hapus Posisi"},
+    {"key":"profile.confirmDeletePositionDesc","zh-CN":"确定删除该职位？删除后不可恢复。","zh-HK":"確定刪除該職位？刪除後不可恢復。","en":"Are you sure you want to delete this position? This action cannot be undone.","id":"Yakin hapus posisi ini? Tidak dapat dibatalkan setelah dihapus."},
+    {"key":"profile.confirmDisable","zh-CN":"禁用账号","zh-HK":"停用帳號","en":"Disable Account","id":"Nonaktifkan Akun"},
+    {"key":"profile.confirmDisableDesc","zh-CN":"禁用后该账号将无法登录，确定禁用？","zh-HK":"停用後該帳號將無法登入，確定停用？","en":"Once disabled, this account will not be able to log in. Are you sure you want to disable it?","id":"Setelah dinonaktifkan, akun tidak dapat masuk. Yakin nonaktifkan?"},
+    {"key":"profile.confirmEnable","zh-CN":"启用账号","zh-HK":"啟用帳號","en":"Enable Account","id":"Aktifkan Akun"},
+    {"key":"profile.confirmEnableDesc","zh-CN":"确定重新启用该账号？启用后可正常登录。","zh-HK":"確定重新啟用該帳號？啟用後可正常登入。","en":"Are you sure you want to re-enable this account? It will be able to log in normally after enabling.","id":"Yakin aktifkan kembali akun ini? Dapat masuk normal setelah diaktifkan."},
+    {"key":"profile.confirmLogout","zh-CN":"退出登录","zh-HK":"登出","en":"Log Out","id":"Keluar"},
+    {"key":"profile.confirmLogoutDesc","zh-CN":"确定要退出当前账号吗？退出后需重新登录。","zh-HK":"退出後需重新登入。","en":"You will need to log in again after logging out.","id":"Anda perlu masuk kembali setelah keluar."},
+    {"key":"profile.confirmPassword","zh-CN":"确认密码","zh-HK":"確認密碼","en":"Confirm Password","id":"Konfirmasi Kata Sandi"},
+    {"key":"profile.confirmReplace","zh-CN":"确认更换","zh-HK":"確認更換","en":"Confirm Replace","id":"Konfirmasi Ganti"},
+    {"key":"profile.createdTime","zh-CN":"创建时间","zh-HK":"建立時間","en":"Created Time","id":"Waktu Dibuat"},
+    {"key":"profile.csAdd","zh-CN":"新增客服","zh-HK":"新增客服","en":"Add Customer Service","id":"Tambah Layanan Pelanggan"},
+    {"key":"profile.csAddSuccess","zh-CN":"客服信息已新增成功","zh-HK":"客服資訊已新增成功","en":"Customer service info added successfully","id":"Info layanan pelanggan berhasil ditambahkan"},
+    {"key":"profile.csDeleted","zh-CN":"已删除","zh-HK":"已刪除","en":"Deleted","id":"Telah dihapus"},
+    {"key":"profile.csEdit","zh-CN":"编辑客服","zh-HK":"編輯客服","en":"Edit Customer Service","id":"Edit Layanan Pelanggan"},
+    {"key":"profile.csEditSuccess","zh-CN":"客服信息已编辑成功","zh-HK":"客服資訊已編輯成功","en":"Customer service info edited successfully","id":"Info layanan pelanggan berhasil diedit"},
+    {"key":"profile.csInfo","zh-CN":"客服信息","zh-HK":"客服資訊","en":"Customer Service Info","id":"Info Layanan Pelanggan"},
+    {"key":"profile.csPhone","zh-CN":"客服电话","zh-HK":"客服電話","en":"Customer Service Phone","id":"Telepon Layanan Pelanggan"},
+    {"key":"profile.csPhonePlaceholder","zh-CN":"请输入客服电话号码","zh-HK":"請輸入客服電話號碼","en":"Enter customer service phone number","id":"Masukkan nomor telepon layanan pelanggan"},
+    {"key":"profile.csRemarkPlaceholder","zh-CN":"请输入备注","zh-HK":"請輸入備註","en":"Enter remarks","id":"Masukkan catatan"},
+    {"key":"profile.csTimeError","zh-CN":"开始时间不能晚于或等于结束时间","zh-HK":"開始時間不能晚於或等於結束時間","en":"Start time cannot be later than or equal to end time","id":"Waktu mulai tidak boleh lebih lambat atau sama dengan waktu selesai"},
+    {"key":"profile.datePickerDay","zh-CN":"日","zh-HK":"日","en":" Day","id":" Hari"},
+    {"key":"profile.datePickerMonth","zh-CN":"月","zh-HK":"月","en":" Month","id":" Bulan"},
+    {"key":"profile.datePickerYear","zh-CN":"年","zh-HK":"年","en":" Year","id":" Tahun"},
+    {"key":"profile.emailAddress","zh-CN":"邮箱地址","zh-HK":"電郵地址","en":"Email Address","id":"Alamat Email"},
+    {"key":"profile.emailBound","zh-CN":"已绑定邮箱","zh-HK":"已綁定電郵","en":"Email bound","id":"Email Terhubung"},
+    {"key":"profile.emailBoundSuccess","zh-CN":"邮箱绑定成功","zh-HK":"電郵綁定成功","en":"Email bound successfully","id":"Email berhasil dihubungkan"},
+    {"key":"profile.emailFormatError","zh-CN":"邮箱格式不正确","zh-HK":"電郵格式不正確","en":"Invalid email format","id":"Format email tidak benar"},
+    {"key":"profile.emailPlaceholder","zh-CN":"请输入邮箱","zh-HK":"請輸入電郵","en":"Enter email","id":"Masukkan email"},
+    {"key":"profile.emailReplaced","zh-CN":"邮箱替换成功","zh-HK":"電郵替換成功","en":"Email replaced successfully","id":"Email berhasil diganti"},
+    {"key":"profile.getCode","zh-CN":"获取验证码","zh-HK":"獲取驗證碼","en":"Get Code","id":"Dapatkan Kode Verifikasi"},
+    {"key":"profile.getCodeRetry","zh-CN":"重新获取 ({n}s)","zh-HK":"重新獲取 ({n}s)","en":"Resend ({n}s)","id":"Kirim Ulang ({n}s)"},
+    {"key":"profile.hour","zh-CN":"时","zh-HK":"時","en":"Hour","id":"Jam"},
+    {"key":"profile.iKnow","zh-CN":"我知道了","zh-HK":"我知道了","en":"Got it","id":"Saya Mengerti"},
+    {"key":"profile.inputNewEmail","zh-CN":"请输入新的邮箱","zh-HK":"請輸入新的電郵","en":"Enter a new email","id":"Masukkan email baru"},
+    {"key":"profile.inputNewPhone","zh-CN":"请输入新的手机号","zh-HK":"請輸入新的手機號","en":"Enter a new phone number","id":"Masukkan nomor ponsel baru"},
+    {"key":"profile.languageSwitch","zh-CN":"切换语言","zh-HK":"切換語言","en":"Switch Language","id":"Ganti Bahasa"},
+    {"key":"profile.lastUpdateLabel","zh-CN":"更新时间：{time}","zh-HK":"更新時間：{time}","en":"Updated Time: {time}","id":"Waktu Diperbarui: {time}"},
+    {"key":"profile.menuAccount","zh-CN":"账号管理","zh-HK":"帳號管理","en":"Account Management","id":"Manajemen Akun"},
+    {"key":"profile.menuCS","zh-CN":"客服信息","zh-HK":"客服資訊","en":"Customer Service Info","id":"Info Layanan Pelanggan"},
+    {"key":"profile.menuConfig","zh-CN":"订单配置","zh-HK":"訂單設定","en":"Order Configuration","id":"Konfigurasi Pesanan"},
+    {"key":"profile.menuModel","zh-CN":"车型管理","zh-HK":"車型管理","en":"Model Management","id":"Manajemen Model"},
+    {"key":"profile.menuPosition","zh-CN":"职位管理","zh-HK":"職位管理","en":"Position Management","id":"Manajemen Posisi"},
+    {"key":"profile.menuSettings","zh-CN":"设置","zh-HK":"設定","en":"Settings","id":"Pengaturan"},
+    {"key":"profile.menuStore","zh-CN":"切换门店","zh-HK":"切換門店","en":"Switch Store","id":"Ganti Toko"},
+    {"key":"profile.merchantPerms","zh-CN":"商户端权限","zh-HK":"商戶端權限","en":"Merchant Permissions","id":"Izin Mitra"},
+    {"key":"profile.minute","zh-CN":"分","zh-HK":"分","en":"Minute","id":"Menit"},
+    {"key":"profile.modelCount","zh-CN":"共 {n} 辆","zh-HK":"共 {n} 輛","en":"{n} vehicles total","id":"Total {n} kendaraan"},
+    {"key":"profile.modelDeposit","zh-CN":"押金","zh-HK":"押金","en":"Deposit","id":"Jaminan"},
+    {"key":"profile.modelDepositError","zh-CN":"请输入金额","zh-HK":"請輸入有效押金","en":"Please enter a valid deposit","id":"Masukkan jaminan yang valid"},
+    {"key":"profile.modelDepositLabel","zh-CN":"押金","zh-HK":"押金 Rp{n}","en":"Deposit Rp{n}","id":"Deposit Rp{n}"},
+    {"key":"profile.modelEdit","zh-CN":"编辑车型","zh-HK":"編輯車型","en":"Edit Model","id":"Sunting Model"},
+    {"key":"profile.modelManage","zh-CN":"车型管理","zh-HK":"車型管理","en":"Model Management","id":"Manajemen Model"},
+    {"key":"profile.modelManageSearch","zh-CN":"搜索车型名称","zh-HK":"搜尋車型名稱","en":"Search model name","id":"Cari nama model"},
+    {"key":"profile.modelName","zh-CN":"车型名称","zh-HK":"車型名稱","en":"Model Name","id":"Nama Model"},
+    {"key":"profile.modelRent","zh-CN":"月租","zh-HK":"月租（Rp）","en":"Monthly Rent (Rp)","id":"Sewa Bulanan (Rp)"},
+    {"key":"profile.modelRentError","zh-CN":"请输入价格","zh-HK":"請輸入有效月租","en":"Please enter a valid monthly rent","id":"Masukkan sewa bulanan yang valid"},
+    {"key":"profile.modelRentLabel","zh-CN":"月租","zh-HK":"月租 Rp{n}","en":"Monthly Rent Rp{n}","id":"Sewa Bulanan Rp{n}"},
+    {"key":"profile.modelSaved","zh-CN":"车型已保存","zh-HK":"車型已儲存","en":"Model saved","id":"Model disimpan"},
+    {"key":"profile.modelSort","zh-CN":"排序","zh-HK":"排序","en":"Sort","id":"Urutan"},
+    {"key":"profile.rentPlan","zh-CN":"租赁方案","zh-HK":"租賃方案","en":"Rental Plan","id":"Rencana Sewa"},
+    {"key":"profile.planHour","zh-CN":"时租","zh-HK":"時租","en":"Hourly","id":"Per Jam"},
+    {"key":"profile.planDay","zh-CN":"日租","zh-HK":"日租","en":"Daily","id":"Per Hari"},
+    {"key":"profile.planWeek","zh-CN":"周租","zh-HK":"週租","en":"Weekly","id":"Mingguan"},
+    {"key":"profile.planMonth","zh-CN":"月租","zh-HK":"月租","en":"Monthly","id":"Bulanan"},
+    {"key":"profile.priceHour","zh-CN":"时租","zh-HK":"時租","en":"Hourly","id":"Per Jam"},
+    {"key":"profile.priceDay","zh-CN":"日租","zh-HK":"日租","en":"Daily","id":"Per Hari"},
+    {"key":"profile.priceWeek","zh-CN":"周租","zh-HK":"週租","en":"Weekly","id":"Mingguan"},
+    {"key":"profile.priceMonth","zh-CN":"月租","zh-HK":"月租","en":"Monthly","id":"Bulanan"},
+    {"key":"profile.priceRequired","zh-CN":"请输入价格","zh-HK":"請輸入價格","en":"Please enter a price","id":"Masukkan harga"},
+    {"key":"profile.priceNotNegative","zh-CN":"请输入 0 或正数，小数最多两位","zh-HK":"價格不能為負數","en":"Price cannot be negative","id":"Harga tidak boleh negatif"},
+    {"key":"profile.depositNotNegative","zh-CN":"请输入 0 或正数，小数最多两位","zh-HK":"押金不能為負數","en":"Deposit cannot be negative","id":"Jaminan tidak boleh negatif"},
+    {"key":"profile.sortNotNegative","zh-CN":"请输入 1–99 之间的整数","zh-HK":"排序不能為負數","en":"Sort order cannot be negative","id":"Urutan tidak boleh negatif"},
+    {"key":"profile.name","zh-CN":"姓名","zh-HK":"姓名","en":"Name","id":"Nama"},
+    {"key":"profile.nameError","zh-CN":"请输入姓名","zh-HK":"請輸入姓名","en":"Please enter name","id":"Masukkan nama"},
+    {"key":"profile.nameLengthError","zh-CN":"姓名不能超过 64 位","zh-HK":"姓名不能超過64個字符","en":"Name cannot exceed 64 characters","id":"Nama tidak boleh lebih dari 64 karakter"},
+    {"key":"profile.namePlaceholder","zh-CN":"请输入姓名","zh-HK":"請輸入姓名","en":"Enter name","id":"Masukkan nama"},
+    {"key":"profile.needBindFirst","zh-CN":"请先绑定手机号或邮箱","zh-HK":"請先綁定手機號或電郵","en":"Please bind a phone number or email first","id":"Silakan hubungkan nomor ponsel atau email terlebih dahulu"},
+    {"key":"profile.newPassword","zh-CN":"新密码","zh-HK":"新密碼","en":"New Password","id":"Kata Sandi Baru"},
+    {"key":"profile.nextStep","zh-CN":"下一步","zh-HK":"下一步","en":"Next","id":"Lanjut"},
+    {"key":"profile.noAccounts","zh-CN":"暂无账号","zh-HK":"暫無帳號","en":"No Accounts","id":"Tidak ada akun"},
+    {"key":"profile.noCSInfo","zh-CN":"暂无客服信息","zh-HK":"暫無客服資訊","en":"No Customer Service Info","id":"Tidak ada info layanan pelanggan"},
+    {"key":"profile.noCSInfoSub","zh-CN":"点击右上角新增客服电话","zh-HK":"點擊右上角新增客服電話","en":"Tap the top right corner to add a customer service phone number","id":"Ketuk pojok kanan atas untuk menambah telepon layanan pelanggan"},
+    {"key":"profile.noMatchingAccounts","zh-CN":"未找到匹配的账号","zh-HK":"未找到匹配的帳號","en":"No matching accounts found","id":"Akun tidak ditemukan"},
+    {"key":"profile.noMatchingModels","zh-CN":"未找到匹配的车型","zh-HK":"未找到匹配的車型","en":"No matching models found","id":"Model tidak ditemukan"},
+    {"key":"profile.noMatchingPositions","zh-CN":"未找到匹配的职位","zh-HK":"未找到匹配的職位","en":"No matching positions found","id":"Posisi tidak ditemukan"},
+    {"key":"profile.noModels","zh-CN":"暂无车型","zh-HK":"暫無車型","en":"No Models","id":"Tidak ada model"},
+    {"key":"profile.noModelsSub","zh-CN":"还没有车型数据","zh-HK":"還沒有車型數據","en":"No model data yet","id":"Belum ada data model"},
+    {"key":"profile.noPositions","zh-CN":"暂无职位","zh-HK":"暫無職位","en":"No Positions","id":"Tidak ada posisi"},
+    {"key":"profile.noPositionsSub","zh-CN":"还没有职位数据","zh-HK":"還沒有職位數據","en":"No position data yet","id":"Belum ada data posisi"},
+    {"key":"profile.notBound","zh-CN":"未绑定","zh-HK":"未綁定","en":"Not Bound","id":"Belum Terhubung"},
+    {"key":"profile.orderConfig","zh-CN":"订单配置","zh-HK":"訂單設定","en":"Order Configuration","id":"Konfigurasi Pesanan"},
+    {"key":"profile.parentPosition","zh-CN":"上级职位","zh-HK":"上級職位","en":"Parent Position","id":"Posisi Atasan"},
+    {"key":"profile.passwordCopied","zh-CN":"密码已复制","zh-HK":"密碼已複製","en":"Password copied","id":"Kata sandi telah disalin"},
+    {"key":"profile.passwordManage","zh-CN":"密码管理","zh-HK":"密碼管理","en":"Password Management","id":"Manajemen Kata Sandi"},
+    {"key":"profile.personalInfo","zh-CN":"个人信息","zh-HK":"個人資訊","en":"Personal Information","id":"Info Pribadi"},
+    {"key":"profile.phoneBound","zh-CN":"已绑定手机号","zh-HK":"已綁定手機號","en":"Phone bound","id":"Ponsel Terhubung"},
+    {"key":"profile.phoneBoundSuccess","zh-CN":"手机号绑定成功","zh-HK":"手機號綁定成功","en":"Phone number bound successfully","id":"Nomor ponsel berhasil dihubungkan"},
+    {"key":"profile.phoneFormatError","zh-CN":"手机号仅支持数字","zh-HK":"手機號僅允許數字","en":"Phone number must contain digits only","id":"Nomor ponsel hanya boleh berisi angka"},
+    {"key":"profile.phonePlaceholder","zh-CN":"请输入手机号","zh-HK":"請輸入手機號","en":"Enter phone number","id":"Masukkan nomor ponsel"},
+    {"key":"profile.phoneReplaced","zh-CN":"手机号替换成功","zh-HK":"手機號替換成功","en":"Phone number replaced successfully","id":"Nomor ponsel berhasil diganti"},
+    {"key":"profile.platformPerms","zh-CN":"平台端权限","zh-HK":"平台端權限","en":"Platform Permissions","id":"Izin Platform"},
+    {"key":"profile.position","zh-CN":"职位","zh-HK":"職位","en":"Position","id":"Posisi"},
+    {"key":"profile.positionAdd","zh-CN":"新增职位","zh-HK":"新增職位","en":"Add Position","id":"Tambah Posisi"},
+    {"key":"profile.positionAddSuccess","zh-CN":"职位新增成功","zh-HK":"職位新增成功","en":"Position added successfully","id":"Posisi berhasil ditambahkan"},
+    {"key":"profile.positionDefaultName","zh-CN":"当前位置","zh-HK":"當前位置","en":"Current Location","id":"Lokasi Saat Ini"},
+    {"key":"profile.positionDeleted","zh-CN":"职位已删除","zh-HK":"職位已刪除","en":"Position deleted","id":"Posisi dihapus"},
+    {"key":"profile.positionDetail","zh-CN":"职位详情","zh-HK":"職位詳情","en":"Position Details","id":"Detail Posisi"},
+    {"key":"profile.positionEdit","zh-CN":"编辑职位","zh-HK":"編輯職位","en":"Edit Position","id":"Edit Posisi"},
+    {"key":"profile.positionError","zh-CN":"请选择职位","zh-HK":"請選擇職位","en":"Please select a position","id":"Pilih posisi"},
+    {"key":"profile.positionManage","zh-CN":"职位管理","zh-HK":"職位管理","en":"Position Management","id":"Manajemen Posisi"},
+    {"key":"profile.positionName","zh-CN":"职位名称","zh-HK":"職位名稱","en":"Position Name","id":"Nama Posisi"},
+    {"key":"profile.positionNamePlaceholder","zh-CN":"请输入职位名称","zh-HK":"請輸入職位名稱","en":"Enter position name","id":"Masukkan nama posisi"},
+    {"key":"profile.positionPerms","zh-CN":"职位与权限","zh-HK":"職位與權限","en":"Positions & Permissions","id":"Posisi dan Izin"},
+    {"key":"profile.positionSaved","zh-CN":"职位已保存","zh-HK":"職位已儲存","en":"Position saved","id":"Posisi disimpan"},
+    {"key":"profile.pwdConfirmPlaceholder","zh-CN":"请再次输入密码","zh-HK":"請再次輸入密碼","en":"Enter password again","id":"Masukkan kembali kata sandi"},
+    {"key":"profile.pwdLengthError","zh-CN":"密码长度需为 6–64 位","zh-HK":"密碼長度需為 8-32 位","en":"Password must be 8-32 characters","id":"Panjang kata sandi harus 8-32 karakter"},
+    {"key":"profile.pwdMismatch","zh-CN":"两次输入的密码不一致","zh-HK":"兩次輸入的密碼不一致","en":"The two passwords do not match","id":"Kata sandi yang dimasukkan tidak cocok"},
+    {"key":"profile.pwdPlaceholder","zh-CN":"请输入新密码","zh-HK":"請輸入新密碼","en":"Enter new password","id":"Masukkan kata sandi baru"},
+    {"key":"profile.pwdUpdated","zh-CN":"密码已更新","zh-HK":"密碼已更新","en":"Password updated","id":"Kata sandi telah diperbarui"},
+    {"key":"profile.remark","zh-CN":"备注","zh-HK":"備註","en":"Remark","id":"Catatan"},
+    {"key":"profile.remarkLabel","zh-CN":"备注：{remark}","zh-HK":"備註：{remark}","en":"Remark: {remark}","id":"Catatan: {remark}"},
+    {"key":"profile.remarkLengthError","zh-CN":"备注不能超过 255 位","zh-HK":"備註不能超過64個字符","en":"Remark cannot exceed 64 characters","id":"Catatan tidak boleh lebih dari 64 karakter"},
+    {"key":"profile.remarkPlaceholder","zh-CN":"请输入备注","zh-HK":"請輸入備註","en":"Enter remark","id":"Masukkan catatan"},
+    {"key":"profile.resetPassword","zh-CN":"重置密码","zh-HK":"重置密碼","en":"Reset Password","id":"Atur Ulang Kata Sandi"},
+    {"key":"profile.searchPosition","zh-CN":"搜索职位名称","zh-HK":"搜尋職位名稱","en":"Search position name","id":"Cari nama posisi"},
+    {"key":"profile.selectAll","zh-CN":"全选","zh-HK":"全選","en":"Select All","id":"Pilih Semua"},
+    {"key":"profile.servicePeriod","zh-CN":"服务时段：{start} - {end}","zh-HK":"服務時段：{start} - {end}","en":"Service Period: {start} - {end}","id":"Periode Layanan: {start} - {end}"},
+    {"key":"profile.setPassword","zh-CN":"设置密码","zh-HK":"設定密碼","en":"Set Password","id":"Atur Kata Sandi"},
+    {"key":"profile.settings","zh-CN":"系统设置","zh-HK":"系統設定","en":"System Settings","id":"Pengaturan Sistem"},
+    {"key":"profile.settingsGeneral","zh-CN":"通用设置","zh-HK":"通用設定","en":"General Settings","id":"Pengaturan Umum"},
+    {"key":"profile.settingsLanguage","zh-CN":"切换语言","zh-HK":"切換語言","en":"Switch Language","id":"Ganti Bahasa"},
+    {"key":"profile.settingsLogout","zh-CN":"退出登录","zh-HK":"登出","en":"Log Out","id":"Keluar"},
+    {"key":"profile.settingsVersion","zh-CN":"当前版本","zh-HK":"當前版本","en":"Current Version","id":"Versi Saat Ini"},
+    {"key":"profile.status","zh-CN":"状态","zh-HK":"狀態","en":"Status","id":"Status"},
+    {"key":"profile.statusDisabled","zh-CN":"禁用","zh-HK":"停用","en":"Disabled","id":"Nonaktif"},
+    {"key":"profile.statusEnabled","zh-CN":"启用","zh-HK":"啟用","en":"Enabled","id":"Aktif"},
+    {"key":"profile.storeLevel.agent","zh-CN":"代理商门店","zh-HK":"代理商門店","en":"Agent Store","id":"Toko Agen"},
+    {"key":"profile.storeLevel.operated","zh-CN":"运营门店","zh-HK":"營運門店","en":"Operated Store","id":"Toko Dikelola"},
+    {"key":"profile.storeLevelLabel","zh-CN":"门店级别","zh-HK":"門店級別","en":"Store Level","id":"Tingkat Toko"},
+    {"key":"profile.storeList","zh-CN":"门店列表","zh-HK":"門店列表","en":"Store List","id":"Daftar Toko"},
+    {"key":"profile.verifyByEmail","zh-CN":"邮箱验证","zh-HK":"電郵驗證","en":"Email Verification","id":"Verifikasi Email"},
+    {"key":"profile.verifyByPhone","zh-CN":"手机验证","zh-HK":"手機驗證","en":"Phone Verification","id":"Verifikasi Ponsel"},
+    {"key":"version.appExited","zh-CN":"应用已退出","zh-HK":"應用已退出","en":"Application exited","id":"Aplikasi telah keluar"},
+    {"key":"version.downloading","zh-CN":"下载中…","zh-HK":"下載中…","en":"Downloading…","id":"Mengunduh…"},
+    {"key":"version.downloadingPackage","zh-CN":"正在下载更新包…","zh-HK":"正在下載更新包…","en":"Downloading update package…","id":"Sedang mengunduh paket pembaruan…"},
+    {"key":"version.exitApp","zh-CN":"退出应用","zh-HK":"退出應用","en":"Exit App","id":"Keluar Aplikasi"},
+    {"key":"version.gotIt","zh-CN":"知道了","zh-HK":"知道了","en":"Got it","id":"Mengerti"},
+    {"key":"version.later","zh-CN":"稍后提醒","zh-HK":"稍後提醒","en":"Remind Later","id":"Ingatkan Nanti"},
+    {"key":"version.latest","zh-CN":"已是最新版本","zh-HK":"已是最新版本","en":"Already the latest version","id":"Sudah versi terbaru"},
+    {"key":"version.latestVersion","zh-CN":"最新版本 V{version}","zh-HK":"最新版本 V{version}","en":"Latest Version V{version}","id":"Versi terbaru V{version}"},
+    {"key":"version.newVersion","zh-CN":"发现新版本","zh-HK":"發現新版本","en":"New Version Found","id":"Versi baru ditemukan"},
+    {"key":"version.packageDownloaded","zh-CN":"安装包已下载，即将安装","zh-HK":"安裝包已下載，即將安裝","en":"Installation package downloaded, installing now","id":"Paket instalasi telah diunduh, akan segera dipasang"},
+    {"key":"version.relaunch","zh-CN":"重新打开应用","zh-HK":"重新打開應用","en":"Reopen App","id":"Buka kembali aplikasi"},
+    {"key":"version.updateComplete","zh-CN":"更新完成！已升级至 V{version}","zh-HK":"更新完成！已升級至 V{version}","en":"Update complete! Upgraded to V{version}","id":"Pembaruan selesai! Ditingkatkan ke V{version}"},
+    {"key":"version.updateNow","zh-CN":"立即更新","zh-HK":"立即更新","en":"Update Now","id":"Perbarui Sekarang"},
+    {"key":"perm.permCancelOrder","zh-CN":"取消订单","zh-HK":"取消訂單","en":"Cancel Order","id":"Batalkan Pesanan"},
+    {"key":"perm.permDashboard","zh-CN":"仪表盘","zh-HK":"儀表盤","en":"Dashboard","id":"Dasbor"},
+    {"key":"perm.permOrderManage","zh-CN":"订单管理","zh-HK":"訂單管理","en":"Order Management","id":"Manajemen Pesanan"},
+    {"key":"perm.permRefundProcess","zh-CN":"退款处理","zh-HK":"退款處理","en":"Refund Processing","id":"Proses Pengembalian Dana"},
+    {"key":"perm.permReturnVehicle","zh-CN":"结束订单","zh-HK":"歸還車輛","en":"Return Vehicle","id":"Kembalikan Kendaraan"},
+    {"key":"perm.permViewOrderDetail","zh-CN":"查看订单详情","zh-HK":"查看訂單詳情","en":"View Order Details","id":"Lihat Detail Pesanan"},
+    {"key":"perm.permViewOrderList","zh-CN":"查看订单列表","zh-HK":"查看訂單列表","en":"View Order List","id":"Lihat Daftar Pesanan"},
+    {"key":"perm.permViewRevenue","zh-CN":"查看营收数据","zh-HK":"查看營收數據","en":"View Revenue Data","id":"Lihat Data Pendapatan"},
+    {"key":"perm.permViewVehOps","zh-CN":"查看车辆运营","zh-HK":"查看車輛營運","en":"View Vehicle Operations","id":"Lihat Operasi Kendaraan"},
+    {"key":"dialcode.australia","zh-CN":"澳大利亚","zh-HK":"澳大利亞","en":"Australia","id":"Australia"},
+    {"key":"dialcode.china","zh-CN":"中国","zh-HK":"中國","en":"China","id":"Tiongkok"},
+    {"key":"dialcode.france","zh-CN":"法国","zh-HK":"法國","en":"France","id":"Prancis"},
+    {"key":"dialcode.germany","zh-CN":"德国","zh-HK":"德國","en":"Germany","id":"Jerman"},
+    {"key":"dialcode.hongkong","zh-CN":"中国香港","zh-HK":"中國香港","en":"Hong Kong, China","id":"Hong Kong, Tiongkok"},
+    {"key":"dialcode.indonesia","zh-CN":"印度尼西亚","zh-HK":"印度尼西亞","en":"Indonesia","id":"Indonesia"},
+    {"key":"dialcode.japan","zh-CN":"日本","zh-HK":"日本","en":"Japan","id":"Jepang"},
+    {"key":"dialcode.korea","zh-CN":"韩国","zh-HK":"韓國","en":"South Korea","id":"Korea"},
+    {"key":"dialcode.macau","zh-CN":"中国澳门","zh-HK":"中國澳門","en":"Macau, China","id":"Makau, Tiongkok"},
+    {"key":"dialcode.malaysia","zh-CN":"马来西亚","zh-HK":"馬來西亞","en":"Malaysia","id":"Malaysia"},
+    {"key":"dialcode.noResults","zh-CN":"未找到匹配的国家/地区","zh-HK":"未找到匹配的國家/地區","en":"No matching country/region found","id":"Negara/wilayah tidak ditemukan"},
+    {"key":"dialcode.searchPlaceholder","zh-CN":"搜索国家/地区或区号","zh-HK":"搜尋國家/地區或區號","en":"Search country/region or code","id":"Cari negara/wilayah atau kode"},
+    {"key":"dialcode.singapore","zh-CN":"新加坡","zh-HK":"新加坡","en":"Singapore","id":"Singapura"},
+    {"key":"dialcode.taiwan","zh-CN":"中国台湾","zh-HK":"中國台灣","en":"Taiwan, China","id":"Taiwan, Tiongkok"},
+    {"key":"dialcode.thailand","zh-CN":"泰国","zh-HK":"泰國","en":"Thailand","id":"Thailand"},
+    {"key":"dialcode.uk","zh-CN":"英国","zh-HK":"英國","en":"United Kingdom","id":"Inggris"},
+    {"key":"dialcode.usa","zh-CN":"美国","zh-HK":"美國","en":"United States","id":"Amerika Serikat"},
+    {"key":"dialcode.vietnam","zh-CN":"越南","zh-HK":"越南","en":"Vietnam","id":"Vietnam"},
+    {"key":"toast.loginSuccess","zh-CN":"登录成功","zh-HK":"登入成功","en":"Login successful","id":"Berhasil masuk"},
+    {"key":"toast.logout","zh-CN":"已退出登录","zh-HK":"已登出","en":"Logged out","id":"Telah keluar"},
+    {"key":"toast.noPermission","zh-CN":"无权限","zh-HK":"無權限","en":"No permission","id":"Tidak ada izin"},
+    {"key":"toast.required","zh-CN":"必填项","zh-HK":"必填項","en":"Required field","id":"Wajib diisi"},
+    {"key":"common.add","zh-CN":"新增","zh-HK":"新增","en":"Add","id":"Tambah"},
+    {"key":"common.cancel","zh-CN":"取消","zh-HK":"取消","en":"Cancel","id":"Batal"},
+    {"key":"common.confirm","zh-CN":"确认","zh-HK":"確認","en":"Confirm","id":"Konfirmasi"},
+    {"key":"common.delete","zh-CN":"删除","zh-HK":"刪除","en":"Delete","id":"Hapus"},
+    {"key":"common.edit","zh-CN":"编辑","zh-HK":"編輯","en":"Edit","id":"Sunting"},
+    {"key":"common.pullToRefresh","zh-CN":"下拉刷新","zh-HK":"下拉刷新","en":"Pull to refresh","id":"Tarik untuk menyegarkan"},
+    {"key":"common.refreshing","zh-CN":"刷新中…","zh-HK":"刷新中…","en":"Refreshing…","id":"Menyegarkan…"},
+    {"key":"common.releaseToRefresh","zh-CN":"释放刷新","zh-HK":"釋放刷新","en":"Release to refresh","id":"Lepas untuk menyegarkan"},
+    {"key":"common.reset","zh-CN":"重置","zh-HK":"重置","en":"Reset","id":"Atur Ulang"},
+    {"key":"common.save","zh-CN":"保存","zh-HK":"儲存","en":"Save","id":"Simpan"},
+    {"key":"common.search","zh-CN":"搜索","zh-HK":"搜尋","en":"Search","id":"Cari"},
+    {"key":"common.all","zh-CN":"全部","zh-HK":"全部","en":"All","id":"Semua"},
+    {"key":"common.account","zh-CN":"账号","zh-HK":"帳號","en":"Account","id":"Akun"},
+    {"key":"common.phone","zh-CN":"手机号","zh-HK":"手機號","en":"Phone Number","id":"Nomor Ponsel"},
+    {"key":"common.email","zh-CN":"邮箱","zh-HK":"電郵","en":"Email","id":"Email"},
+    {"key":"common.startTime","zh-CN":"开始时间","zh-HK":"開始時間","en":"Start Time","id":"Waktu Mulai"},
+    {"key":"common.endTime","zh-CN":"结束时间","zh-HK":"結束時間","en":"End Time","id":"Waktu Selesai"},
+    { "key": "vehicles.batteryDetail", "zh-CN": "电池详情", "zh-HK": "電池詳情", "en": "Battery Details", "id": "Detail Baterai" },
+    { "key": "vehicles.batteryInfo", "zh-CN": "电池信息", "zh-HK": "電池資訊", "en": "Battery Info", "id": "Info Baterai" },
+    { "key": "vehicles.batteryModel", "zh-CN": "电池型号", "zh-HK": "電池型號", "en": "Battery Model", "id": "Model Baterai" },
+    { "key": "vehicles.batteryModelManage", "zh-CN": "电池型号管理", "zh-HK": "電池型號管理", "en": "Battery Model Management", "id": "Manajemen Model Baterai" },
+    { "key": "vehicles.batteryModelName", "zh-CN": "电池型号名称", "zh-HK": "電池型號名稱", "en": "Battery Model Name", "id": "Nama Model Baterai" },
+    { "key": "vehicles.batteryMotorStatus", "zh-CN": "电机状态", "zh-HK": "電機狀態", "en": "Motor Status", "id": "Status Motor" },
+    { "key": "vehicles.batteryPower", "zh-CN": "电量", "zh-HK": "電量", "en": "Power Level", "id": "Level Daya" },
+    { "key": "vehicles.batteryDischargeStatus", "zh-CN": "放电状态", "zh-HK": "放電狀態", "en": "Discharge Status", "id": "Status Pelepasan" },
+    { "key": "vehicles.batteryRelate", "zh-CN": "关联电池", "zh-HK": "關聯電池", "en": "Related Battery", "id": "Baterai Terkait" },
+    { "key": "vehicles.batteryUnbind", "zh-CN": "解绑", "zh-HK": "解綁", "en": "Unbind", "id": "Lepaskan" },
+    { "key": "vehicles.batteryUnlockMotor", "zh-CN": "解锁电机", "zh-HK": "解鎖電機", "en": "Unlock Motor", "id": "Buka Kunci Motor" },
+    { "key": "vehicles.batteryDisableDischarge", "zh-CN": "禁止放电", "zh-HK": "禁止放電", "en": "Disable Discharge", "id": "Nonaktifkan Pelepasan" },
+    { "key": "vehicles.batteryAllowDischarge", "zh-CN": "允许放电", "zh-HK": "允許放電", "en": "Allow Discharge", "id": "Izinkan Pelepasan" },
+    { "key": "vehicles.batteryLockMotor", "zh-CN": "锁电机", "zh-HK": "鎖電機", "en": "Lock Motor", "id": "Kunci Motor" },
+    { "key": "vehicles.batteryAllOff", "zh-CN": "全关", "zh-HK": "全關", "en": "All Off", "id": "Semua Mati" },
+    { "key": "vehicles.batteryAllOn", "zh-CN": "全开", "zh-HK": "全開", "en": "All On", "id": "Semua Nyala" },
+    { "key": "vehicles.batteryAdd", "zh-CN": "新增电池", "zh-HK": "新增電池", "en": "Add Battery", "id": "Tambah Baterai" },
+    { "key": "vehicles.batteryEdit", "zh-CN": "编辑电池", "zh-HK": "編輯電池", "en": "Edit Battery", "id": "Edit Baterai" },
+    { "key": "vehicles.batteryInputNo", "zh-CN": "输入电池编号", "zh-HK": "輸入電池編號", "en": "Enter Battery No.", "id": "Masukkan No. Baterai" },
+    { "key": "vehicles.batterySelectModel", "zh-CN": "选择电池型号", "zh-HK": "選擇電池型號", "en": "Select Battery Model", "id": "Pilih Model Baterai" },
+    { "key": "vehicles.batteryNoData", "zh-CN": "暂无电池", "zh-HK": "暫無電池", "en": "No Batteries", "id": "Tidak ada baterai" },
+    { "key": "vehicles.batteryNoDevice", "zh-CN": "暂无电池设备数据", "zh-HK": "暫無電池設備數據", "en": "No battery device data", "id": "Belum ada data perangkat baterai" },
+    { "key": "vehicles.batteryNoPosition", "zh-CN": "暂无电池位置", "zh-HK": "暫無電池位置", "en": "No battery location", "id": "Belum ada lokasi baterai" },
+    { "key": "vehicles.batteryNoModel", "zh-CN": "暂无电池型号", "zh-HK": "暫無電池型號", "en": "No battery models", "id": "Tidak ada model baterai" },
+    { "key": "vehicles.batteryNoMatchModel", "zh-CN": "未找到匹配的电池型号", "zh-HK": "未找到匹配的電池型號", "en": "No matching battery model", "id": "Model baterai tidak ditemukan" },
+    { "key": "vehicles.batteryEmptyList", "zh-CN": "还没有电池数据", "zh-HK": "還沒有電池數據", "en": "No battery data yet", "id": "Belum ada data baterai" },
+    { "key": "vehicles.batteryEmptyModelList", "zh-CN": "还没有电池型号数据", "zh-HK": "還沒有電池型號數據", "en": "No battery model data yet", "id": "Belum ada data model baterai" },
+    { "key": "profile.userAccount", "zh-CN": "用户账号", "zh-HK": "用戶帳號", "en": "User Account", "id": "Akun Pengguna" },
+    { "key": "profile.userInfo", "zh-CN": "用户资料", "zh-HK": "用戶資料", "en": "User Info", "id": "Info Pengguna" },
+    { "key": "profile.addUserInfo", "zh-CN": "添加用户资料", "zh-HK": "添加用戶資料", "en": "Add User Info", "id": "Tambah Info Pengguna" },
+    { "key": "profile.noUserInfo", "zh-CN": "暂无用户资料", "zh-HK": "暫無用戶資料", "en": "No user info", "id": "Belum ada info pengguna" },
+    { "key": "profile.noMatchUser", "zh-CN": "未找到匹配用户", "zh-HK": "未找到匹配用戶", "en": "No matching user", "id": "Pengguna tidak ditemukan" },
+    { "key": "profile.noUser", "zh-CN": "暂无用户", "zh-HK": "暫無用戶", "en": "No Users", "id": "Tidak ada pengguna" },
+    { "key": "profile.notLoggedIn", "zh-CN": "未登录", "zh-HK": "未登入", "en": "Not Logged In", "id": "Belum Masuk" },
+    { "key": "profile.unboundUser", "zh-CN": "未绑定用户", "zh-HK": "未綁定用戶", "en": "Unbound User", "id": "Pengguna Belum Terhubung" },
+    { "key": "profile.bindUser", "zh-CN": "绑定用户", "zh-HK": "綁定用戶", "en": "Bind User", "id": "Hubungkan Pengguna" },
+    { "key": "profile.emailSearch", "zh-CN": "邮箱搜索", "zh-HK": "電郵搜尋", "en": "Email Search", "id": "Cari Email" },
+    { "key": "profile.inputAccount", "zh-CN": "输入账号", "zh-HK": "輸入帳號", "en": "Enter Account", "id": "Masukkan Akun" },
+    { "key": "profile.packageName", "zh-CN": "套餐名称", "zh-HK": "套餐名稱", "en": "Package Name", "id": "Nama Paket" },
+    { "key": "profile.packageImage", "zh-CN": "套餐主图", "zh-HK": "套餐主圖", "en": "Package Image", "id": "Gambar Paket" },
+    { "key": "profile.packageAdd", "zh-CN": "新增套餐", "zh-HK": "新增套餐", "en": "Add Package", "id": "Tambah Paket" },
+    { "key": "profile.packageEdit", "zh-CN": "编辑套餐", "zh-HK": "編輯套餐", "en": "Edit Package", "id": "Edit Paket" },
+    { "key": "profile.noPackage", "zh-CN": "暂无套餐", "zh-HK": "暫無套餐", "en": "No Packages", "id": "Tidak ada paket" },
+    { "key": "profile.noMatchPackage", "zh-CN": "未找到匹配的套餐", "zh-HK": "未找到匹配的套餐", "en": "No matching package", "id": "Paket tidak ditemukan" },
+    { "key": "profile.emptyPackageList", "zh-CN": "还没有套餐数据", "zh-HK": "還沒有套餐數據", "en": "No package data yet", "id": "Belum ada data paket" },
+    { "key": "orders.paymentOnline", "zh-CN": "线上支付", "zh-HK": "線上支付", "en": "Online Payment", "id": "Pembayaran Online" },
+    { "key": "orders.endOrder", "zh-CN": "结束订单", "zh-HK": "結束訂單", "en": "End Order", "id": "Akhiri Pesanan" },
+    { "key": "orders.refundDetail", "zh-CN": "退款明细", "zh-HK": "退款明細", "en": "Refund Details", "id": "Detail Pengembalian Dana" },
+    { "key": "orders.pickupTime", "zh-CN": "取用时间", "zh-HK": "取用時間", "en": "Pickup Time", "id": "Waktu Pengambilan" },
+    { "key": "orders.refundable", "zh-CN": "可退", "zh-HK": "可退", "en": "Refundable", "id": "Dapat Dikembalikan" },
+    { "key": "orders.optional", "zh-CN": "可选", "zh-HK": "可選", "en": "Optional", "id": "Opsional" },
+    { "key": "common.thumbnail", "zh-CN": "缩略图", "zh-HK": "縮圖", "en": "Thumbnail", "id": "Gambar Mini" },
+    { "key": "vehicles.functionControl", "zh-CN": "功能控制", "zh-HK": "功能控制", "en": "Function Control", "id": "Kontrol Fungsi" },
+    { "key": "profile.permControl", "zh-CN": "权限控制", "zh-HK": "權限控制", "en": "Permission Control", "id": "Kontrol Izin" },
+    { "key": "common.confirmBind", "zh-CN": "确认绑定", "zh-HK": "確認綁定", "en": "Confirm Bind", "id": "Konfirmasi Hubungkan" },
+    { "key": "version.updateAvailable", "zh-CN": "版本更新", "zh-HK": "版本更新", "en": "Version Update", "id": "Pembaruan Versi" },
+    { "key": "version.suggestUpdate", "zh-CN": "建议更新", "zh-HK": "建議更新", "en": "Suggest Update", "id": "Saran Pembaruan" },
+    { "key": "version.forceUpdate", "zh-CN": "强制更新", "zh-HK": "強制更新", "en": "Force Update", "id": "Pembaruan Paksa" },
+    { "key": "version.latestVersionLabel", "zh-CN": "最新版本", "zh-HK": "最新版本", "en": "Latest Version", "id": "Versi Terbaru" }
+  ,
+    {"key":"common.pleaseSelect","zh-CN":"请先选择","zh-HK":"請先選擇","en":"Please select first","id":"Pilih terlebih dahulu"},
+    {"key":"common.searchEmpty","zh-CN":"请调整关键词后重试","zh-HK":"請調整關鍵詞後重試","en":"No results found, please adjust keywords and try again","id":"Tidak ada hasil, silakan sesuaikan kata kunci dan coba lagi"},
+    {"key":"common.clickUpload","zh-CN":"点击上传","zh-HK":"點擊上傳","en":"Tap to upload","id":"Ketuk untuk unggah"},
+    {"key":"common.copied","zh-CN":"已复制","zh-HK":"已複製","en":"Copied","id":"Tersalin"},
+    {"key":"common.copyFailed","zh-CN":"复制失败","zh-HK":"複製失敗","en":"Copy failed","id":"Gagal menyalin"},
+    {"key":"common.copyEmpty","zh-CN":"无内容可复制","zh-HK":"無內容可複製","en":"Nothing to copy","id":"Tidak ada yang dapat disalin"},
+    {"key":"common.pleaseSelectUser","zh-CN":"请先选择用户","zh-HK":"請先選擇用戶","en":"Please select a user first","id":"Pilih pengguna terlebih dahulu"},
+    {"key":"common.preRange","zh-CN":"请输入 1–365 之间的整数","zh-HK":"請輸入 1–365 之間的整數","en":"Please enter an integer between 1 and 365","id":"Masukkan bilangan bulat antara 1 dan 365"},
+    {"key":"package.statusOn","zh-CN":"上架","zh-HK":"上架","en":"Listed","id":"Dipublikasikan"},
+    {"key":"package.statusOff","zh-CN":"下架","zh-HK":"下架","en":"Unlisted","id":"Ditarik"},
+    {"key":"package.list","zh-CN":"套餐列表","zh-HK":"套餐列表","en":"Package List","id":"Daftar Paket"},
+    {"key":"package.manage","zh-CN":"套餐管理","zh-HK":"套餐管理","en":"Package Management","id":"Manajemen Paket"},
+    {"key":"battery.manage","zh-CN":"电池管理","zh-HK":"電池管理","en":"Battery Management","id":"Manajemen Baterai"},
+    {"key":"battery.list","zh-CN":"电池列表","zh-HK":"電池列表","en":"Battery List","id":"Daftar Baterai"},
+    {"key":"battery.discharge","zh-CN":"电池放电","zh-HK":"電池放電","en":"Battery Discharge","id":"Pelepasan Baterai"},
+    {"key":"battery.position","zh-CN":"电池位置","zh-HK":"電池位置","en":"Battery Location","id":"Lokasi Baterai"},
+    {"key":"battery.replaced","zh-CN":"电池已更换","zh-HK":"電池已更換","en":"Battery replaced","id":"Baterai telah diganti"},
+    {"key":"battery.replace","zh-CN":"更换电池","zh-HK":"更換電池","en":"Replace Battery","id":"Ganti Baterai"},
+    {"key":"battery.dischargeAllow","zh-CN":"允许后设备可正常放电","zh-HK":"允許後設備可正常放電","en":"After enabling, the device can discharge normally","id":"Setelah diizinkan, perangkat dapat melepas muatan secara normal"},
+    {"key":"battery.dischargeForbid","zh-CN":"禁止后设备将无法放电","zh-HK":"禁止後設備將無法放電","en":"After disabling, the device will not be able to discharge","id":"Setelah dilarang, perangkat tidak dapat melepas muatan"},
+    {"key":"perm.sysConfig","zh-CN":"系统配置","zh-HK":"系統配置","en":"System Configuration","id":"Konfigurasi Sistem"},
+    {"key":"perm.csList","zh-CN":"客服列表","zh-HK":"客服列表","en":"Customer Service List","id":"Daftar Layanan Pelanggan"},
+    {"key":"alert.ignoreMistake","zh-CN":"误报","zh-HK":"誤報","en":"False Alarm","id":"Alarm Palsu"},
+    {"key":"alert.ignoreHandled","zh-CN":"已现场处理","zh-HK":"已現場處理","en":"Handled On-site","id":"Ditangani di Lokasi"},
+    {"key":"alert.ignoreDuplicate","zh-CN":"重复告警","zh-HK":"重複告警","en":"Duplicate Alert","id":"Peringatan Duplikat"},
+    {"key":"vehicles.commandLock","zh-CN":"开关锁","zh-HK":"開關鎖","en":"Lock/Unlock","id":"Kunci/Buka Kunci"}
+];
+// 移除指定 key（如 APP 标题行 login.title）
+ROWS = ROWS.filter(r => r.key !== "login.title");
+
+const LANG_COLS = [{"title": "简体中文", "code": "zh-CN"}, {"title": "繁體中文", "code": "zh-HK"}, {"title": "English", "code": "en"}, {"title": "Indonesian", "code": "id"}];
+const MISSING = "—";
+
+// 一级分组 key → 中文显示名
+const GROUP_LABELS = {
+  "alert": "告警",
+  "common": "通用",
+  "dialcode": "国家/地区区号",
+  "home": "首页",
+  "login": "登录",
+  "orders": "订单",
+  "perm": "权限",
+  "profile": "我的 / 账号",
+  "tab": "底部导航",
+  "toast": "提示",
+  "vehicles": "车辆",
+  "version": "版本更新",
+  "battery": "电池",
+  "package": "套餐"
+};
+function groupLabel(g) {
+  return GROUP_LABELS[g] || g;
+}
+
+const tbody = document.getElementById('tbody');
+const headRow = document.getElementById('headRow');
+const searchInput = document.getElementById('search');
+const matchCount = document.getElementById('matchCount');
+const emptyState = document.getElementById('emptyState');
+document.getElementById('totalCount').textContent = ROWS.length;
+
+// 构建表头（仅语言列，无 key 列）
+const columns = LANG_COLS;
+let sortCol = null; // 初始不排序：组内按源码（ROWS）关联顺序展示
+let sortDir = 1; // 1 升序, -1 降序
+let activeGroup = '__ALL__'; // 当前选中的一级分组
+
+// 一级分组的业务展示顺序（按用户使用流程：登录 → 导航 → 核心业务 → 个人中心 → 支撑模块）
+const GROUP_ORDER = [
+  "common",     // 通用
+  "login",      // 登录
+  "tab",        // 底部导航
+  "home",       // 首页
+  "orders",     // 订单
+  "vehicles",   // 车辆
+  "profile",    // 我的 / 账号
+  "perm",       // 权限
+  "toast",      // 提示
+  "alert",      // 告警
+  "version",    // 版本更新
+  "dialcode"    // 国家/地区区号
+];
+// 派生一级分组：以业务顺序为准，未列出的按字母序补在末尾
+const allGroups = Array.from(new Set(ROWS.map(r => r.key.split('.')[0])));
+const GROUPS = [
+  ...GROUP_ORDER.filter(g => allGroups.includes(g)),
+  ...allGroups.filter(g => !GROUP_ORDER.includes(g)).sort((a, b) => a.localeCompare(b, 'zh-Hans-CN', { numeric: true }))
+];
+
+// 初始化分组下拉框
+const groupSel = document.getElementById('groupSel');
+GROUPS.forEach(g => {
+  const opt = document.createElement('option');
+  opt.value = g;
+  const cnt = ROWS.filter(r => r.key.split('.')[0] === g).length;
+  opt.textContent = `${groupLabel(g)} (${cnt})`;
+  groupSel.appendChild(opt);
+});
+groupSel.addEventListener('change', () => {
+  activeGroup = groupSel.value;
+  render();
+});
+
+columns.forEach(col => {
+  const th = document.createElement('th');
+  th.dataset.code = col.code;
+  th.innerHTML = col.title + '<span class="arrow">▲</span>';
+  th.addEventListener('click', () => {
+    if (sortCol === col.code) {
+      sortDir = -sortDir;
+    } else {
+      sortCol = col.code;
+      sortDir = 1;
+    }
+    render();
+  });
+  headRow.appendChild(th);
+});
+
+function getVal(row, code) {
+  const v = row[code];
+  return (v === undefined || v === null || v === '') ? MISSING : v;
+}
+
+function groupOf(row) {
+  return row.key.split('.')[0];
+}
+
+function render() {
+  const q = searchInput.value.trim().toLowerCase();
+  let list = ROWS.filter(r => {
+    if (activeGroup !== '__ALL__' && groupOf(r) !== activeGroup) return false;
+    if (!q) return true;
+    return LANG_COLS.some(c => getVal(r, c.code).toLowerCase().includes(q));
+  });
+
+  // 仅在用户点击表头后排序；初始保持源码（ROWS）关联顺序
+  if (sortCol !== null) {
+    list = list.slice().sort((a, b) => {
+      const av = getVal(a, sortCol).toLowerCase();
+      const bv = getVal(b, sortCol).toLowerCase();
+      return av.localeCompare(bv, 'zh-Hans-CN', { numeric: true }) * sortDir;
+    });
+  }
+
+  // 更新表头指示
+  [...headRow.children].forEach(th => {
+    const arrow = th.querySelector('.arrow');
+    if (sortCol !== null && th.dataset.code === sortCol) {
+      th.classList.add('sorted');
+      arrow.textContent = sortDir === 1 ? '▲' : '▼';
+    } else {
+      th.classList.remove('sorted');
+      arrow.textContent = '▲';
+    }
+  });
+
+  tbody.innerHTML = '';
+
+  if (activeGroup === '__ALL__') {
+    // 按一级分组聚合渲染
+    const byGroup = {};
+    list.forEach(r => {
+      const g = groupOf(r);
+      (byGroup[g] = byGroup[g] || []).push(r);
+    });
+    GROUPS.forEach(g => {
+      const items = byGroup[g];
+      if (!items || items.length === 0) return;
+      const gr = document.createElement('tr');
+      gr.className = 'group-row';
+      const gt = document.createElement('td');
+      gt.colSpan = columns.length;
+      gt.innerHTML = `${groupLabel(g)}<span class="gcount">${items.length} 项</span>`;
+      gr.appendChild(gt);
+      tbody.appendChild(gr);
+      items.forEach(r => tbody.appendChild(buildRow(r)));
+    });
+  } else {
+    // 单组直接渲染数据行
+    list.forEach(r => tbody.appendChild(buildRow(r)));
+  }
+
+  matchCount.textContent = `匹配 ${list.length} / ${ROWS.length}`;
+  emptyState.style.display = list.length ? 'none' : 'block';
+}
+
+function buildRow(r) {
+  const tr = document.createElement('tr');
+  LANG_COLS.forEach(c => {
+    const td = document.createElement('td');
+    const v = getVal(r, c.code);
+    td.textContent = v;
+    if (v === MISSING) td.className = 'missing';
+    tr.appendChild(td);
+  });
+  return tr;
+}
+
+searchInput.addEventListener('input', render);
+render();
+</script>
+</body>
+</html>
+
+
