@@ -590,7 +590,7 @@ body{font-family:var(--font-body);background:#E8EAED;min-height:100vh;display:fl
 <div class="conf-pay-row mb-3" v-long-pan>
 <div class="conf-pay" :class="rentPeriodIdx===0?'is-selected':''" @click="rentPeriodIdx=0" data-idx="0">时租</div>
 <div class="conf-pay" :class="rentPeriodIdx===1?'is-selected':''" @click="rentPeriodIdx=1" data-idx="1">日租</div>
-<div class="conf-pay" :class="rentPeriodIdx===2?'is-selected':''" @click="rentPeriodIdx=2" data-idx="2">周期</div>
+<div class="conf-pay" :class="rentPeriodIdx===2?'is-selected':''" @click="rentPeriodIdx=2" data-idx="2">周租</div>
 <div class="conf-pay" :class="rentPeriodIdx===3?'is-selected':''" @click="rentPeriodIdx=3" data-idx="3">月租</div>
 </div>
 <div class="conf-detail" :key="rentPeriodIdx">
@@ -2435,10 +2435,10 @@ const rentDateLabel=computed(()=>dateOptions[rentDateIdx.value]||dateOptions[0])
 function selectDate(i){rentDateIdx.value=i;showDatePicker.value=false;if(showVehicle.value){showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600)}}
 const showPeriodPicker=ref(false);
 const rentPeriodIdx=ref(3);
-const periodOptions=['时租','日租','周期','月租'];
+const periodOptions=['时租','日租','周租','月租'];
 const rentPeriodLabel=computed(()=>periodOptions[rentPeriodIdx.value]||periodOptions[3]);
 function selectPeriod(i){rentPeriodIdx.value=i;showPeriodPicker.value=false;if(showVehicle.value){showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600)}}
-const periodUnitMap={'时租':'小时','日租':'天','周期':'周','月租':'月'};
+const periodUnitMap={'时租':'小时','日租':'天','周租':'周','月租':'月'};
 const periodUnit=computed(()=>periodUnitMap[periodOptions[rentPeriodIdx.value]]||periodOptions[rentPeriodIdx.value]);
 
 const showStore=ref(false);
@@ -2458,8 +2458,8 @@ function selectStore(i){selectedStore.value=storeFiltered.value[i];showVehicle.v
 const showVehicle=ref(false);
 const vehicleListEmpty=ref(false);
 const vehicleData={
-  0:{0:[{name:'乐迪SAA',desc:'72V32Ah锂电池·续航120km·智能防盗',price:'Rp2459800',period:'月租',img:'#2B3F5F'},{name:'雅迪冠能3 S9 MAX',desc:'72V20Ah石墨烯电池·续航100km·蓝牙解锁·GPS定位·智能语音助手·APP远程控制',price:'Rp3299800',period:'月租',img:'#FF6A00'}],1:[{name:'乐迪SAA',desc:'72V32Ah锂电池·续航120km·智能防盗',price:'Rp586400',period:'日租',img:'#2B3F5F'},{name:'雅迪冠能3 S9 MAX',desc:'72V20Ah石墨烯电池·续航100km·蓝牙解锁·GPS定位·智能语音助手·APP远程控制',price:'Rp786400',period:'日租',img:'#FF6A00'}],2:[{name:'乐迪SAA',desc:'72V32Ah锂电池·续航120km·智能防盗',price:'Rp3518200',period:'周期',img:'#2B3F5F'}],3:[{name:'乐迪SAA',desc:'72V32Ah锂电池·续航120km·智能防盗',price:'Rp2459800',period:'月租',img:'#2B3F5F'},{name:'雅迪冠能3 S9 MAX',desc:'72V20Ah石墨烯电池·续航100km·蓝牙解锁·GPS定位·智能语音助手·APP远程控制',price:'Rp3299800',period:'月租',img:'#FF6A00'}]},
-  1:{0:[{name:'天能锂电72V20Ah',desc:'石墨烯锂电池·续航100km·可单独租赁',price:'Rp899800',period:'月租',img:'#17A34A'},{name:'超威黑金72V32Ah',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',price:'Rp1299800',period:'月租',img:'#2B3F5F'}],1:[{name:'天能锂电72V20Ah',desc:'石墨烯锂电池·续航100km·可单独租赁',price:'Rp224800',period:'日租',img:'#17A34A'}],2:[{name:'超威黑金72V32Ah',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',price:'Rp1299800',period:'周期',img:'#2B3F5F'}],3:[{name:'天能锂电72V20Ah',desc:'石墨烯锂电池·续航100km·可单独租赁',price:'Rp899800',period:'月租',img:'#17A34A'},{name:'超威黑金72V32Ah',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',price:'Rp1299800',period:'月租',img:'#2B3F5F'}]},
+  0:{0:[{name:'乐迪SAA',desc:'72V32Ah锂电池·续航120km·智能防盗',price:'Rp2459800',period:'月租',img:'#2B3F5F'},{name:'雅迪冠能3 S9 MAX',desc:'72V20Ah石墨烯电池·续航100km·蓝牙解锁·GPS定位·智能语音助手·APP远程控制',price:'Rp3299800',period:'月租',img:'#FF6A00'}],1:[{name:'乐迪SAA',desc:'72V32Ah锂电池·续航120km·智能防盗',price:'Rp586400',period:'日租',img:'#2B3F5F'},{name:'雅迪冠能3 S9 MAX',desc:'72V20Ah石墨烯电池·续航100km·蓝牙解锁·GPS定位·智能语音助手·APP远程控制',price:'Rp786400',period:'日租',img:'#FF6A00'}],2:[{name:'乐迪SAA',desc:'72V32Ah锂电池·续航120km·智能防盗',price:'Rp3518200',period:'周租',img:'#2B3F5F'}],3:[{name:'乐迪SAA',desc:'72V32Ah锂电池·续航120km·智能防盗',price:'Rp2459800',period:'月租',img:'#2B3F5F'},{name:'雅迪冠能3 S9 MAX',desc:'72V20Ah石墨烯电池·续航100km·蓝牙解锁·GPS定位·智能语音助手·APP远程控制',price:'Rp3299800',period:'月租',img:'#FF6A00'}]},
+  1:{0:[{name:'天能锂电72V20Ah',desc:'石墨烯锂电池·续航100km·可单独租赁',price:'Rp899800',period:'月租',img:'#17A34A'},{name:'超威黑金72V32Ah',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',price:'Rp1299800',period:'月租',img:'#2B3F5F'}],1:[{name:'天能锂电72V20Ah',desc:'石墨烯锂电池·续航100km·可单独租赁',price:'Rp224800',period:'日租',img:'#17A34A'}],2:[{name:'超威黑金72V32Ah',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',price:'Rp1299800',period:'周租',img:'#2B3F5F'}],3:[{name:'天能锂电72V20Ah',desc:'石墨烯锂电池·续航100km·可单独租赁',price:'Rp899800',period:'月租',img:'#17A34A'},{name:'超威黑金72V32Ah',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',price:'Rp1299800',period:'月租',img:'#2B3F5F'}]},
   2:{0:[{name:'乐迪SAA+天能72V20Ah',desc:'整车+电池套餐·续航100km·智能防盗',price:'Rp3299800',period:'月租',img:'#2B3F5F'}],1:[{name:'乐迪SAA+天能72V20Ah',desc:'整车+电池套餐·续航100km',price:'Rp786400',period:'日租',img:'#2B3F5F'}],2:[],3:[]}
 };
 const vehicleList=computed(()=>{if(vehicleListEmpty.value)return[];const t=vehicleData[rentDateIdx.value];if(!t)return[];return t[rentPeriodIdx.value]||[]});
@@ -2488,7 +2488,7 @@ const confReturnDate=computed(()=>{const d=new Date();d.setDate(d.getDate()+conf
 const confPickupISO=computed(()=>fmtISO(new Date()));
 const confReturnISO=computed(()=>{const d=new Date();d.setDate(d.getDate()+confTotalDays.value);return fmtISO(d)});
 const confPeriodDetail=computed(()=>{
-const idx=rentPeriodIdx.value;const base=confPeriodBase[idx];const units=['小时','天','周','月'];const labels=['时租','日租','周期','月租'];const daysWords=['按小时计费','按天计费','7天','30天'];
+const idx=rentPeriodIdx.value;const base=confPeriodBase[idx];const units=['小时','天','周','月'];const labels=['时租','日租','周租','月租'];const daysWords=['按小时计费','按天计费','7天','30天'];
 return{amt:base,unit:units[idx],label:labels[idx],daysWord:daysWords[idx]};});
 function fmtRp(n){return 'Rp '+n.toLocaleString('id-ID')}
 const orderPlanDisplay=computed(()=>{const d=confPeriodDetail.value;return d.label+'×'+confRentDays.value+d.unit});
@@ -2563,22 +2563,22 @@ const orderDataByCategory={
 {id:'YZ202512100002',status:'progress',statusText:'进行中',statusColor:'#22D098',model:'雅迪冠能3 S9 MAX',vModel:'雅迪冠能3 S9 MAX',frame:'LSN9CA9A8L8193001',img:'#FF6A00',desc:'72V20Ah石墨烯电池·续航100km·蓝牙解锁·GPS定位·智能语音助手·APP远程控制',store:'雅迪电动车(锦江区春熙路店)',plan:'时租×3小时',created:'2025-12-10 14:05:00',payTime:'2025-12-10 14:12:00',pickupTime:'2025-12-10 14:18:00',amount:'Rp 7,035'},
 {id:'YZ202512080003',status:'return',statusText:'待归还',statusColor:'#1A82F4',model:'乐迪SAA',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193002',img:'#2B3F5F',desc:'72V32Ah锂电池·续航120km·智能防盗',store:'雅迪电动车(双流区雅和北路店)',plan:'日租×2天',created:'2025-12-08 10:00:00',payTime:'2025-12-08 10:06:00',pickupTime:'2025-12-08 10:15:00',amount:'Rp 11,728'},
 {id:'YZ202511280003',status:'overdue',statusText:'已超期',statusColor:'#FF4343',model:'乐迪SAA',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193004',img:'#2B3F5F',desc:'72V32Ah锂电池·续航120km·智能防盗',store:'雅迪电动车(武侯区磨子桥店)',plan:'日租×5天',created:'2025-11-28 10:30:00',payTime:'2025-11-28 10:36:00',pickupTime:'2025-11-28 10:42:00',amount:'Rp 29,320'},
-{id:'YZ202511200008',status:'breach',statusText:'已违约',statusColor:'#FF4343',model:'雅迪冠能3 S9 MAX',vModel:'雅迪冠能3 S9 MAX',frame:'LSN9CA9A8L8193005',img:'#FF6A00',desc:'72V20Ah石墨烯电池·续航100km·蓝牙解锁·GPS定位·智能语音助手·APP远程控制',store:'雅迪电动车(高新区天府大道店)',plan:'周期×2周',created:'2025-11-20 16:42:00',payTime:'2025-11-20 16:48:00',pickupTime:'2025-11-20 16:55:00',amount:'Rp 70,364'},
+{id:'YZ202511200008',status:'breach',statusText:'已违约',statusColor:'#FF4343',model:'雅迪冠能3 S9 MAX',vModel:'雅迪冠能3 S9 MAX',frame:'LSN9CA9A8L8193005',img:'#FF6A00',desc:'72V20Ah石墨烯电池·续航100km·蓝牙解锁·GPS定位·智能语音助手·APP远程控制',store:'雅迪电动车(高新区天府大道店)',plan:'周租×2周',created:'2025-11-20 16:42:00',payTime:'2025-11-20 16:48:00',pickupTime:'2025-11-20 16:55:00',amount:'Rp 70,364'},
 {id:'YZ202511150004',status:'complete',statusText:'已完成',statusColor:'#333333',model:'乐迪SAA',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193008',img:'#2B3F5F',desc:'72V32Ah锂电池·续航120km·智能防盗',store:'雅迪电动车(武侯区磨子桥店)',plan:'月租×1月',created:'2025-11-15 08:15:00',payTime:'2025-11-15 08:20:00',pickupTime:'2025-11-15 08:28:00',finishTime:'2025-12-15 08:28:00',amount:'Rp 117,272'},
 {id:'YZ202511100005',status:'cancelled',statusText:'已取消',statusColor:'#666666',model:'雅迪冠能3 S9 MAX',vModel:'雅迪冠能3 S9 MAX',frame:'LSN9CA9A8L8193010',img:'#FF6A00',desc:'72V20Ah石墨烯电池·续航100km·蓝牙解锁·GPS定位·智能语音助手·APP远程控制',store:'雅迪电动车(锦江区春熙路店)',plan:'时租×4小时',created:'2025-11-10 11:45:00',payTime:'2025-11-10 11:50:00',pickupTime:'2025-11-10 11:55:00',cancelTime:'2025-11-10 12:10:00',amount:'Rp 9,380'}
 ],
 '电池租赁':[
-{id:'DC202512130005',status:'created',statusText:'已创建',statusColor:'#FF8C1B',model:'天能锂电72V20Ah',img:'#17A34A',desc:'石墨烯锂电池·续航100km·可单独租赁',store:'雅迪电动车(锦江区春熙路店)',plan:'周期×1周',created:'2025-12-13 07:30:00',amount:'Rp 35,182'},
+{id:'DC202512130005',status:'created',statusText:'已创建',statusColor:'#FF8C1B',model:'天能锂电72V20Ah',img:'#17A34A',desc:'石墨烯锂电池·续航100km·可单独租赁',store:'雅迪电动车(锦江区春熙路店)',plan:'周租×1周',created:'2025-12-13 07:30:00',amount:'Rp 35,182'},
 {id:'DC202512090051',status:'pickup',statusText:'待取用',statusColor:'#FF8C1B',model:'超威黑金72V32Ah',img:'#2B3F5F',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',store:'雅迪电动车(武侯区磨子桥店)',plan:'时租×5小时',created:'2025-12-09 15:30:00',payTime:'2025-12-09 15:35:00',amount:'Rp 17,325'},
 {id:'DC202512120005',status:'progress',statusText:'进行中',statusColor:'#22D098',model:'天能锂电72V20Ah',bModel:'天能锂电72V20Ah',battNo:'TNX-72V-B2024106',img:'#17A34A',desc:'石墨烯锂电池·续航100km·可单独租赁',store:'雅迪电动车(锦江区春熙路店)',plan:'日租×7天',created:'2025-12-12 11:08:00',payTime:'2025-12-12 11:15:00',pickupTime:'2025-12-12 11:21:00',amount:'Rp 41,048'},
 {id:'DC202512050053',status:'return',statusText:'待归还',statusColor:'#1A82F4',model:'超威黑金72V32Ah',bModel:'超威黑金72V32Ah',battNo:'CW-72V-B2024107',img:'#2B3F5F',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',store:'雅迪电动车(武侯区磨子桥店)',plan:'月租×1月',created:'2025-12-05 09:00:00',payTime:'2025-12-05 09:05:00',pickupTime:'2025-12-05 09:12:00',amount:'Rp 117,280'},
 {id:'DC202511280055',status:'overdue',statusText:'已超期',statusColor:'#FF4343',model:'超威黑金72V32Ah',bModel:'超威黑金72V32Ah',battNo:'CW-72V-B2024109',img:'#2B3F5F',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',store:'雅迪电动车(武侯区磨子桥店)',plan:'日租×5天',created:'2025-11-28 10:30:00',payTime:'2025-11-28 10:36:00',pickupTime:'2025-11-28 10:42:00',amount:'Rp 29,320'},
-{id:'DC202511200056',status:'breach',statusText:'已违约',statusColor:'#FF4343',model:'天能锂电72V20Ah',bModel:'天能锂电72V20Ah',battNo:'TNX-72V-B2024110',img:'#17A34A',desc:'石墨烯锂电池·续航100km·可单独租赁',store:'雅迪电动车(高新区天府大道店)',plan:'周期×2周',created:'2025-11-20 16:42:00',payTime:'2025-11-20 16:48:00',pickupTime:'2025-11-20 16:55:00',amount:'Rp 70,364'},
-{id:'DC202511200006',status:'complete',statusText:'已完成',statusColor:'#333333',model:'天能锂电72V20Ah',bModel:'天能锂电72V20Ah',battNo:'TNX-72V-B2024113',img:'#17A34A',desc:'石墨烯锂电池·续航100km·可单独租赁',store:'雅迪电动车(高新区天府大道店)',plan:'周期×3周',created:'2025-11-20 09:50:00',payTime:'2025-11-20 09:55:00',pickupTime:'2025-11-20 10:02:00',finishTime:'2025-12-11 10:02:00',amount:'Rp 105,546'},
+{id:'DC202511200056',status:'breach',statusText:'已违约',statusColor:'#FF4343',model:'天能锂电72V20Ah',bModel:'天能锂电72V20Ah',battNo:'TNX-72V-B2024110',img:'#17A34A',desc:'石墨烯锂电池·续航100km·可单独租赁',store:'雅迪电动车(高新区天府大道店)',plan:'周租×2周',created:'2025-11-20 16:42:00',payTime:'2025-11-20 16:48:00',pickupTime:'2025-11-20 16:55:00',amount:'Rp 70,364'},
+{id:'DC202511200006',status:'complete',statusText:'已完成',statusColor:'#333333',model:'天能锂电72V20Ah',bModel:'天能锂电72V20Ah',battNo:'TNX-72V-B2024113',img:'#17A34A',desc:'石墨烯锂电池·续航100km·可单独租赁',store:'雅迪电动车(高新区天府大道店)',plan:'周租×3周',created:'2025-11-20 09:50:00',payTime:'2025-11-20 09:55:00',pickupTime:'2025-11-20 10:02:00',finishTime:'2025-12-11 10:02:00',amount:'Rp 105,546'},
 {id:'DC202511140054',status:'cancelled',statusText:'已取消',statusColor:'#666666',model:'超威黑金72V32Ah',bModel:'超威黑金72V32Ah',battNo:'CW-72V-B2024115',img:'#2B3F5F',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',store:'雅迪电动车(双流区雅和北路店)',plan:'日租×2天',created:'2025-11-14 16:15:00',payTime:'2025-11-14 16:20:00',pickupTime:'2025-11-14 16:28:00',cancelTime:'2025-11-14 18:00:00',amount:'Rp 11,728'}
 ],
 '车电套餐':[
-{id:'TC202512080012',status:'created',statusText:'已创建',statusColor:'#FF8C1B',model:'乐迪SAA+天能72V20Ah',desc:'整车+电池套餐·续航100km·智能防盗',store:'雅迪电动车(锦江区春熙路店)',plan:'周期×1周',created:'2025-12-08 11:30:00',amount:'Rp 168,128'},
+{id:'TC202512080012',status:'created',statusText:'已创建',statusColor:'#FF8C1B',model:'乐迪SAA+天能72V20Ah',desc:'整车+电池套餐·续航100km·智能防盗',store:'雅迪电动车(锦江区春熙路店)',plan:'周租×1周',created:'2025-12-08 11:30:00',amount:'Rp 168,128'},
 {id:'TC202512060007',status:'pickup',statusText:'待取用',statusColor:'#FF8C1B',model:'乐迪SAA+天能72V20Ah',vModel:'乐迪SAA',bModel:'天能72V20Ah',desc:'整车+电池套餐·续航100km·智能防盗',store:'雅迪电动车(双流区雅和北路店)',plan:'月租×1月',created:'2025-12-05 13:20:00',payTime:'2025-12-05 13:25:00',amount:'Rp 452,800'},
 {id:'TC202511260009',status:'progress',statusText:'进行中',statusColor:'#22D098',model:'乐迪SAA+天能72V20Ah',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193001',bModel:'天能72V20Ah',battNo:'TNX-72V-B2024106',desc:'整车+电池套餐·续航100km·智能防盗',store:'雅迪电动车(双流区雅和北路店)',plan:'时租×6小时',created:'2025-11-26 10:15:00',payTime:'2025-11-26 10:22:00',pickupTime:'2025-11-26 10:28:00',amount:'Rp 42,072'},
 {id:'TC202511300011',status:'return',statusText:'待归还',statusColor:'#1A82F4',model:'乐迪SAA+天能72V20Ah',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193003',bModel:'天能72V20Ah',battNo:'TNX-72V-B2024108',desc:'整车+电池套餐·续航100km·智能防盗',store:'雅迪电动车(锦江区春熙路店)',plan:'日租×2天',created:'2025-11-30 09:00:00',payTime:'2025-11-30 09:05:00',pickupTime:'2025-11-30 09:12:00',amount:'Rp 84,928'},
