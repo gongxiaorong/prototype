@@ -205,7 +205,14 @@
     "confirmOrder": "確認訂單",
     "renter": "用車人",
     "payNow": "立即支付",
-    "docsUnit": "份資料"
+    "docsUnit": "份",
+    "billHourly": "按小時計費",
+    "billDaily": "按天計費",
+    "days7": "7天",
+    "days30": "30天",
+    "rentDurationTotal": "租賃時長（共{n}{unit}）",
+    "unitHour": "小時",
+    "unitDay": "天"
   },
   "profile": {
     "accountError": "請輸入帳號",

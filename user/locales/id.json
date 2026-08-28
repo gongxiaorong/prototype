@@ -205,7 +205,14 @@
     "confirmOrder": "Konfirmasi Pesanan",
     "renter": "Penyewa",
     "payNow": "Bayar Sekarang",
-    "docsUnit": "dokumen"
+    "docsUnit": "dokumen",
+    "billHourly": "Dibebankan per Jam",
+    "billDaily": "Dibebankan per Hari",
+    "days7": "7 Hari",
+    "days30": "30 Hari",
+    "rentDurationTotal": "Durasi Sewa (total {n} {unit})",
+    "unitHour": "Jam",
+    "unitDay": "Hari"
   },
   "profile": {
     "accountError": "Masukkan akun",

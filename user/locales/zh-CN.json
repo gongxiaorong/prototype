@@ -205,7 +205,14 @@
     "confirmOrder": "确认订单",
     "renter": "用车人",
     "payNow": "立即支付",
-    "docsUnit": "份资料"
+    "docsUnit": "份",
+    "billHourly": "按小时计费",
+    "billDaily": "按天计费",
+    "days7": "7天",
+    "days30": "30天",
+    "rentDurationTotal": "租赁时长（共{n}{unit}）",
+    "unitHour": "小时",
+    "unitDay": "天"
   },
   "profile": {
     "accountError": "请输入账号",

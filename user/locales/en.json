@@ -205,7 +205,14 @@
     "confirmOrder": "Confirm Order",
     "renter": "Renter",
     "payNow": "Pay Now",
-    "docsUnit": "document(s)"
+    "docsUnit": "document(s)",
+    "billHourly": "Billed Hourly",
+    "billDaily": "Billed Daily",
+    "days7": "7 Days",
+    "days30": "30 Days",
+    "rentDurationTotal": "Rental Duration ({n} {unit} total)",
+    "unitHour": "Hours",
+    "unitDay": "Days"
   },
   "profile": {
     "accountError": "Please enter account",
