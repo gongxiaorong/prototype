@@ -40,7 +40,8 @@
     "buyNow": "立即選購",
     "segVehicle": "車輛",
     "segBattery": "電池",
-    "safeRide": "安全騎行"
+    "safeRide": "安全騎行",
+    "myDevices": "我的設備"
   },
   "vehicles": {
     "addVinPlaceholder": "請輸入車架號",

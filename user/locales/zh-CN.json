@@ -40,7 +40,8 @@
     "buyNow": "立即选购",
     "segVehicle": "车辆",
     "segBattery": "电池",
-    "safeRide": "安全骑行"
+    "safeRide": "安全骑行",
+    "myDevices": "我的设备"
   },
   "vehicles": {
     "addVinPlaceholder": "请输入车架号",

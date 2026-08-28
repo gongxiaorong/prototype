@@ -40,7 +40,8 @@
     "buyNow": "Beli Sekarang",
     "segVehicle": "Kendaraan",
     "segBattery": "Baterai",
-    "safeRide": "Berkendara aman"
+    "safeRide": "Berkendara aman",
+    "myDevices": "Perangkat Saya"
   },
   "vehicles": {
     "addVinPlaceholder": "Masukkan nomor rangka",

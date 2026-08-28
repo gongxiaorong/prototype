@@ -40,7 +40,8 @@
     "buyNow": "Shop Now",
     "segVehicle": "Vehicles",
     "segBattery": "Battery",
-    "safeRide": "Safe riding"
+    "safeRide": "Safe riding",
+    "myDevices": "My Device"
   },
   "vehicles": {
     "addVinPlaceholder": "Enter VIN",
