@@ -840,7 +840,85 @@ let ROWS = [
     {"key":"alert.ignoreMistake","zh-CN":"误报","zh-HK":"誤報","en":"False Alarm","id":"Alarm Palsu"},
     {"key":"alert.ignoreHandled","zh-CN":"已现场处理","zh-HK":"已現場處理","en":"Handled On-site","id":"Ditangani di Lokasi"},
     {"key":"alert.ignoreDuplicate","zh-CN":"重复告警","zh-HK":"重複告警","en":"Duplicate Alert","id":"Peringatan Duplikat"},
-    {"key":"vehicles.commandLock","zh-CN":"开关锁","zh-HK":"開關鎖","en":"Lock/Unlock","id":"Kunci/Buka Kunci"}
+    {"key":"vehicles.commandLock","zh-CN":"开关锁","zh-HK":"開關鎖","en":"Lock/Unlock","id":"Kunci/Buka Kunci"},
+  // ===== common 补充 =====
+  {"key":"common.searchUserPlaceholder","zh-CN":"输入账号 / 手机号 / 邮箱搜索","zh-HK":"輸入帳號 / 手機號碼 / 電子郵件搜尋","en":"Search by account / phone / email","id":"Cari berdasarkan akun / telepon / email"},
+  {"key":"common.uploadSpecLarge","zh-CN":"尺寸：454px × 454px 格式：PNG 透明底，大小：不超过 1MB","zh-HK":"尺寸：454px × 454px 格式：PNG 透明底，大小：不超過 1MB","en":"Size: 454px × 454px, format: PNG with transparent background, max 1MB","id":"Ukuran: 454px × 454px, format: PNG latar transparan, maksimal 1MB"},
+  {"key":"common.uploadSpecSmall","zh-CN":"尺寸：170px × 170px 格式：PNG 透明底，大小：不超过 512KB","zh-HK":"尺寸：170px × 170px 格式：PNG 透明底，大小：不超過 512KB","en":"Size: 170px × 170px, format: PNG with transparent background, max 512KB","id":"Ukuran: 170px × 170px, format: PNG latar transparan, maksimal 512KB"},
+  // ===== login 补充 =====
+  {"key":"login.welcome","zh-CN":"欢迎登录","zh-HK":"歡迎登入","en":"Welcome","id":"Selamat datang"},
+  // ===== home 补充 =====
+  {"key":"home.alert.recent","zh-CN":"最近告警列表","zh-HK":"最近告警列表","en":"Recent alerts","id":"Daftar peringatan terbaru"},
+  {"key":"home.stats.business","zh-CN":"经营数据看板","zh-HK":"經營數據看板","en":"Business dashboard","id":"Dasbor data operasional"},
+  {"key":"home.stats.vehicle","zh-CN":"车辆运营统计","zh-HK":"車輛運營統計","en":"Vehicle operation statistics","id":"Statistik operasi kendaraan"},
+  {"key":"home.vehicleMap","zh-CN":"车辆地图","zh-HK":"車輛地圖","en":"Vehicle map","id":"Peta kendaraan"},
+  {"key":"home.view","zh-CN":"首页总览","zh-HK":"首頁總覽","en":"Overview","id":"Ikhtisar"},
+  // ===== orders 补充 =====
+  {"key":"orders.bindBatteryHint","zh-CN":"请为订单绑定指定电池","zh-HK":"請為訂單綁定指定電池","en":"Bind a battery to this order","id":"Ikatkan baterai ke pesanan ini"},
+  {"key":"orders.bindVehicleHint","zh-CN":"请为订单绑定指定车辆","zh-HK":"請為訂單綁定指定車輛","en":"Bind a vehicle to this order","id":"Ikatkan kendaraan ke pesanan ini"},
+  {"key":"orders.confirmFinishOffline","zh-CN":"确认结束订单？该订单为线下支付，如需要退款请线下处理退款","zh-HK":"確認結束訂單？該訂單為線下支付，如需要退款請線下處理退款","en":"Finish this order? It was paid offline, so process any refund offline","id":"Selesaikan pesanan ini? Pembayaran dilakukan luring, mohon proses pengembalian dana secara luring"},
+  {"key":"orders.confirmRefundTotal","zh-CN":"确认执行退款？合计退款 Rp {amount}","zh-HK":"確認執行退款？合計退款 Rp {amount}","en":"Confirm the refund? Total refund Rp {amount}","id":"Konfirmasi pengembalian dana? Total pengembalian Rp {amount}"},
+  {"key":"orders.opAssignVehicle","zh-CN":"绑定车辆","zh-HK":"綁定車輛","en":"Bind vehicle","id":"Ikat kendaraan"},
+  {"key":"orders.opChangeVehicle","zh-CN":"更换车辆","zh-HK":"更換車輛","en":"Change vehicle","id":"Ganti kendaraan"},
+  {"key":"orders.opRefund","zh-CN":"订单退款","zh-HK":"訂單退款","en":"Order refund","id":"Pengembalian dana pesanan"},
+  {"key":"orders.opReturnVehicle","zh-CN":"还车","zh-HK":"還車","en":"Return vehicle","id":"Kembalikan kendaraan"},
+  {"key":"orders.replaceBatteryHint","zh-CN":"请为订单更换指定电池","zh-HK":"請為訂單更換指定電池","en":"Select a replacement battery for this order","id":"Pilih baterai pengganti untuk pesanan ini"},
+  {"key":"orders.replaceVehicleHint","zh-CN":"请为订单更换指定车辆","zh-HK":"請為訂單更換指定車輛","en":"Select a replacement vehicle for this order","id":"Pilih kendaraan pengganti untuk pesanan ini"},
+  // ===== vehicles 补充 =====
+  {"key":"vehicles.motorLockHint","zh-CN":"电机锁定后车辆将无法骑行","zh-HK":"電機鎖定後車輛將無法騎行","en":"The vehicle cannot be ridden once the motor is locked","id":"Kendaraan tidak dapat dikendarai setelah motor dikunci"},
+  {"key":"vehicles.motorLockedToast","zh-CN":"锁电机成功","zh-HK":"鎖電機成功","en":"Motor locked","id":"Motor berhasil dikunci"},
+  {"key":"vehicles.motorUnlockHint","zh-CN":"电机解锁后车辆将恢复骑行","zh-HK":"電機解鎖後車輛將恢復騎行","en":"The vehicle can be ridden again once the motor is unlocked","id":"Kendaraan dapat dikendarai kembali setelah motor dibuka kuncinya"},
+  {"key":"vehicles.motorUnlockedToast","zh-CN":"解锁电机成功","zh-HK":"解鎖電機成功","en":"Motor unlocked","id":"Motor berhasil dibuka kuncinya"},
+  {"key":"vehicles.noLocationListOnly","zh-CN":"{n}辆无定位，仅列表可见","zh-HK":"{n}輛無定位，僅列表可見","en":"{n} vehicles without location, visible in list only","id":"{n} kendaraan tanpa lokasi, hanya terlihat di daftar"},
+  // ===== profile 补充 =====
+  {"key":"profile.confirmReplaceBind","zh-CN":"确认替换","zh-HK":"確認替換","en":"Confirm replacement","id":"Konfirmasi penggantian"},
+  {"key":"profile.confirmUnbindUser","zh-CN":"确认解绑该用户","zh-HK":"確認解綁該用戶","en":"Confirm unbinding this user","id":"Konfirmasi pelepasan ikatan pengguna ini"},
+  {"key":"profile.unbindUser","zh-CN":"解绑用户","zh-HK":"解綁用戶","en":"Unbind user","id":"Lepas ikatan pengguna"},
+  // ===== perm 补充 =====
+  {"key":"perm.group.batt","zh-CN":"电池管理","zh-HK":"電池管理","en":"Battery management","id":"Manajemen baterai"},
+  {"key":"perm.group.ord","zh-CN":"订单管理","zh-HK":"訂單管理","en":"Order management","id":"Manajemen pesanan"},
+  {"key":"perm.group.sys","zh-CN":"系统配置","zh-HK":"系統設定","en":"System configuration","id":"Konfigurasi sistem"},
+  {"key":"perm.group.veh","zh-CN":"车辆管理","zh-HK":"車輛管理","en":"Vehicle management","id":"Manajemen kendaraan"},
+  // ===== account 补充 =====
+  {"key":"account.list","zh-CN":"账号列表","zh-HK":"帳號列表","en":"Account list","id":"Daftar akun"},
+  // ===== batt_model 补充 =====
+  {"key":"batt_model.list","zh-CN":"电池型号列表","zh-HK":"電池型號列表","en":"Battery model list","id":"Daftar model baterai"},
+  // ===== battery 补充 =====
+  {"key":"battery.bind","zh-CN":"绑定电池","zh-HK":"綁定電池","en":"Bind battery","id":"Ikat baterai"},
+  {"key":"battery.dischargeAllowed","zh-CN":"已允许放电","zh-HK":"已允許放電","en":"Discharge allowed","id":"Pengosongan diizinkan"},
+  {"key":"battery.dischargeForbidden","zh-CN":"已禁止放电","zh-HK":"已禁止放電","en":"Discharge forbidden","id":"Pengosongan dilarang"},
+  {"key":"battery.dischargeOffHint","zh-CN":"当前已禁止放电，点击可恢复","zh-HK":"當前已禁止放電，點擊可恢復","en":"Discharge is forbidden. Tap to allow","id":"Pengosongan saat ini dilarang. Ketuk untuk mengizinkan"},
+  {"key":"battery.dischargeOnHint","zh-CN":"当前允许放电，点击可禁止","zh-HK":"當前允許放電，點擊可禁止","en":"Discharge is allowed. Tap to forbid","id":"Pengosongan saat ini diizinkan. Ketuk untuk melarang"},
+  {"key":"battery.lostLockHint","zh-CN":"报失后电池将被锁定，无法正常放电","zh-HK":"報失後電池將被鎖定，無法正常放電","en":"Once reported lost, the battery is locked and cannot discharge","id":"Setelah dilaporkan hilang, baterai dikunci dan tidak dapat dikosongkan"},
+  {"key":"battery.lostUnlockHint","zh-CN":"解除报失后电池将被解锁，恢复放电","zh-HK":"解除報失後電池將被解鎖，恢復放電","en":"The battery will be unlocked once the lost report is cleared","id":"Baterai akan dibuka kuncinya setelah laporan kehilangan dibatalkan"},
+  {"key":"battery.noLocationListOnly","zh-CN":"{n}块无定位，仅列表可见","zh-HK":"{n}塊無定位，僅列表可見","en":"{n} batteries without location, visible in list only","id":"{n} baterai tanpa lokasi, hanya terlihat di daftar"},
+  {"key":"battery.reportLost","zh-CN":"电池报失","zh-HK":"電池報失","en":"Report battery as lost","id":"Laporkan baterai hilang"},
+  {"key":"battery.searchEmpty","zh-CN":"未找到匹配的电池，请调整搜索条件","zh-HK":"未找到符合的電池，請調整搜尋條件","en":"No matching battery found. Adjust your search","id":"Baterai yang cocok tidak ditemukan. Sesuaikan pencarian"},
+  // ===== model 补充 =====
+  {"key":"model.list","zh-CN":"车型列表","zh-HK":"車型列表","en":"Vehicle model list","id":"Daftar model kendaraan"},
+  // ===== order 补充 =====
+  {"key":"order.battery.operate.confirm_payment","zh-CN":"确认支付","zh-HK":"確認支付","en":"Confirm payment","id":"Konfirmasi pembayaran"},
+  {"key":"order.battery.refund.create","zh-CN":"发起退款","zh-HK":"發起退款","en":"Initiate refund","id":"Ajukan pengembalian dana"},
+  {"key":"order.battery.refund.list","zh-CN":"查看退款记录","zh-HK":"查看退款記錄","en":"View refund records","id":"Lihat riwayat pengembalian dana"},
+  {"key":"order.operate.confirm_payment","zh-CN":"确认支付","zh-HK":"確認支付","en":"Confirm payment","id":"Konfirmasi pembayaran"},
+  {"key":"order.package.operate.confirm_payment","zh-CN":"确认支付","zh-HK":"確認支付","en":"Confirm payment","id":"Konfirmasi pembayaran"},
+  {"key":"order.package.refund.create","zh-CN":"发起退款","zh-HK":"發起退款","en":"Initiate refund","id":"Ajukan pengembalian dana"},
+  {"key":"order.package.refund.list","zh-CN":"查看退款记录","zh-HK":"查看退款記錄","en":"View refund records","id":"Lihat riwayat pengembalian dana"},
+  {"key":"order.refund.create","zh-CN":"发起退款","zh-HK":"發起退款","en":"Initiate refund","id":"Ajukan pengembalian dana"},
+  {"key":"order.refund.list","zh-CN":"查看退款记录","zh-HK":"查看退款記錄","en":"View refund records","id":"Lihat riwayat pengembalian dana"},
+  // ===== order_config 补充 =====
+  {"key":"order_config.edit","zh-CN":"编辑配置","zh-HK":"編輯設定","en":"Edit configuration","id":"Ubah konfigurasi"},
+  // ===== package 补充 =====
+  {"key":"package.namePlaceholder","zh-CN":"请输入套餐名称","zh-HK":"請輸入套餐名稱","en":"Enter package name","id":"Masukkan nama paket"},
+  // ===== position 补充 =====
+  {"key":"position.list","zh-CN":"职位列表","zh-HK":"職位列表","en":"Position list","id":"Daftar jabatan"},
+  // ===== vehicle 补充 =====
+  {"key":"vehicle.command.find_car","zh-CN":"寻车鸣笛","zh-HK":"尋車鳴笛","en":"Locate vehicle by horn","id":"Cari kendaraan dengan klakson"},
+  {"key":"vehicle.list","zh-CN":"车辆列表","zh-HK":"車輛列表","en":"Vehicle list","id":"Daftar kendaraan"},
+  // ===== perm 补充 =====
+  {"key":"perm.group.ordBatt","zh-CN":"电池订单","zh-HK":"電池訂單","en":"Battery orders","id":"Pesanan baterai"},
+  {"key":"perm.group.ordPkg","zh-CN":"套餐订单","zh-HK":"套餐訂單","en":"Package orders","id":"Pesanan paket"},
+
 ];
 // 移除指定 key（如 APP 标题行 login.title）
 ROWS = ROWS.filter(r => r.key !== "login.title");
@@ -850,6 +928,13 @@ const MISSING = "—";
 
 // 一级分组 key → 中文显示名
 const GROUP_LABELS = {
+  "order_config": "订单配置",
+  "order": "订单（权限码）",
+  "position": "职位",
+  "account": "账号",
+  "batt_model": "电池型号",
+  "model": "车型",
+  "vehicle": "车辆",
   "alert": "告警",
   "common": "通用",
   "dialcode": "国家/地区区号",
@@ -884,6 +969,13 @@ let activeGroup = '__ALL__'; // 当前选中的一级分组
 
 // 一级分组的业务展示顺序（按用户使用流程：登录 → 导航 → 核心业务 → 个人中心 → 支撑模块）
 const GROUP_ORDER = [
+  "order_config",
+  "order",
+  "position",
+  "account",
+  "batt_model",
+  "model",
+  "vehicle",
   "common",     // 通用
   "login",      // 登录
   "tab",        // 底部导航
