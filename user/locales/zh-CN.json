@@ -86,7 +86,9 @@
     "lockOpen": "开锁",
     "lockClose": "关锁",
     "cmdSending": "指令下发中…",
-    "noDevice": "暂无设备"
+    "noDevice": "暂无设备",
+    "goHomeToBind": "请前往主页下单后绑定",
+    "goHome": "前往主页"
   },
   "orders": {
     "cancelOrder": "取消订单",

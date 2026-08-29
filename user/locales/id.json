@@ -86,7 +86,9 @@
     "lockOpen": "Buka kunci",
     "lockClose": "Kunci",
     "cmdSending": "Mengirim perintah…",
-    "noDevice": "Tidak ada perangkat"
+    "noDevice": "Tidak ada perangkat",
+    "goHomeToBind": "Silakan buat pesanan di beranda, lalu hubungkan perangkat",
+    "goHome": "Beranda"
   },
   "orders": {
     "cancelOrder": "Batalkan Pesanan",

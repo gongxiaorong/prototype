@@ -86,7 +86,9 @@
     "lockOpen": "Unlock",
     "lockClose": "Lock",
     "cmdSending": "Sending command…",
-    "noDevice": "No device"
+    "noDevice": "No device",
+    "goHomeToBind": "Please place your order on the homepage, then bind",
+    "goHome": "Home"
   },
   "orders": {
     "cancelOrder": "Cancel Order",

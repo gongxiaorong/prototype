@@ -86,7 +86,9 @@
     "lockOpen": "開鎖",
     "lockClose": "關鎖",
     "cmdSending": "指令下發中…",
-    "noDevice": "暫無設備"
+    "noDevice": "暫無設備",
+    "goHomeToBind": "請前往主頁下單後綁定",
+    "goHome": "前往主頁"
   },
   "orders": {
     "cancelOrder": "取消訂單",
