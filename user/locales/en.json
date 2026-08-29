@@ -41,7 +41,8 @@
     "segVehicle": "Vehicles",
     "segBattery": "Battery",
     "safeRide": "Safe riding",
-    "myDevices": "My Device"
+    "myDevices": "My Device",
+    "distNearestStore": "{dist} to the nearest store"
   },
   "vehicles": {
     "addVinPlaceholder": "Enter VIN",
@@ -88,7 +89,20 @@
     "cmdSending": "Sending command…",
     "noDevice": "No device",
     "goHomeToBind": "Please place your order on the homepage, then bind",
-    "goHome": "Home"
+    "goHome": "Home",
+    "current": "Current",
+    "noDeviceBound": "No device bound",
+    "validUntil": "Valid until {date}",
+    "companionTime": "Companion Time",
+    "unbind": "Unbind",
+    "bindVehicle": "Bind Vehicle",
+    "bindBattery": "Bind Battery",
+    "unbindVehicleDesc": "After unbinding, this vehicle will be removed from your account and related smart services will be disabled",
+    "confirmBindVehicle": "Confirm binding this vehicle to your account?",
+    "confirmBindBattery": "Confirm binding this battery to your account?",
+    "binding": "Binding...",
+    "distanceInfo": "{m} m from you",
+    "walkInfo": "Walk {m} min"
   },
   "orders": {
     "cancelOrder": "Cancel Order",
@@ -214,7 +228,19 @@
     "days30": "30 Days",
     "rentDurationTotal": "Rental Duration ({n} {unit} total)",
     "unitHour": "Hours",
-    "unitDay": "Days"
+    "unitDay": "Days",
+    "confirmTitle": "Confirm Order",
+    "totalDays": "{n} days in total",
+    "myOrders": "My Orders",
+    "uploadNotSupported": "Upload not supported in the current order status",
+    "docTextPlaceholder": "Enter text material",
+    "confirmDeleteDoc": "Confirm deleting this document?",
+    "countdownCancel": "{time} remaining. The order will be auto-cancelled if unpaid",
+    "returnReminder": "7 days left in the rental period, please return to the store on time",
+    "overdueReminder": "Order has expired, please return to the store promptly",
+    "breachReminder": "7 days breached, order locked. Please contact the store immediately",
+    "refundDetail": "Refund Details",
+    "inputBattNo": "Enter battery number"
   },
   "profile": {
     "accountError": "Please enter account",
@@ -281,7 +307,14 @@
     "aboutUs": "About Us",
     "feedback": "Feedback",
     "nickname": "Nickname",
-    "noMaterial": "No materials"
+    "noMaterial": "No materials",
+    "switchLang": "Switch Language",
+    "phoneVerify": "Phone Verification",
+    "newPwdPlaceholder": "Enter a new password (6-64 characters)",
+    "confirmNewPwd": "Confirm New Password",
+    "confirmNewPwdPlaceholder": "Enter the new password again",
+    "currentBound": "Currently bound: {value}",
+    "idInfoHint": "Upload ID card, driver's license, etc."
   },
   "version": {
     "appExited": "Application exited",
@@ -293,7 +326,9 @@
     "newVersion": "New Version Found",
     "packageDownloaded": "Installation package downloaded, installing now",
     "relaunch": "Reopen App",
-    "updateNow": "Update Now"
+    "updateNow": "Update Now",
+    "latestVersion": "Latest version V{version}",
+    "updateComplete": "Update complete! Upgraded to V{version}"
   },
   "dialcode": {
     "australia": "Australia",
@@ -316,7 +351,8 @@
   "toast": {
     "loginSuccess": "Login successful",
     "logout": "Logged out",
-    "deviceUnbound": "Device unbound"
+    "deviceUnbound": "Device unbound",
+    "deviceBound": "Device bound successfully"
   },
   "common": {
     "cancel": "Cancel",
@@ -341,7 +377,15 @@
     "clickBlankClose": "Tap blank area to close",
     "nothingToCopy": "Nothing to copy",
     "copied": "Copied",
-    "copyFailed": "Copy failed"
+    "copyFailed": "Copy failed",
+    "unitDayShort": "d",
+    "unitMonthShort": "mo",
+    "unitYearShort": "y",
+    "unitHourShort": "h",
+    "unitMinuteShort": "min",
+    "saveSuccess": "Saved successfully",
+    "materialDeleted": "Material deleted",
+    "copiedFormat": "{label} copied"
   },
   "store": {
     "selectStore": "Select Store",
@@ -362,7 +406,9 @@
     "info": "Battery Info",
     "unbind": "Unbind Battery",
     "dischargeOn": "Allow Discharge",
-    "dischargeOff": "Disable Discharge"
+    "dischargeOff": "Disable Discharge",
+    "unbindDesc": "After unbinding, this battery will be removed from your account",
+    "orderProgress": "Order in Progress"
   },
   "idInfo": {
     "title": "Document Info",

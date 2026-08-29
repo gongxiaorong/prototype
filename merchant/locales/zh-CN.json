@@ -159,7 +159,13 @@
     "phonePlaceholder": "请输入手机号",
     "privacyPolicy": "隐私政策",
     "switchLang": "切换语言",
-    "title": "电动车租赁商户管理端"
+    "title": "电动车租赁商户管理端",
+    "passwordRequired": "请输入密码",
+    "pwdCharError": "密码仅支持大小写字母、数字、键盘符号",
+    "phoneFormatMismatch": "手机号格式不正确，请检查号码与区号是否匹配",
+    "emailTooLong": "邮箱地址不能超过 255 位",
+    "accountCharError": "账号仅支持字母、数字、下划线",
+    "codeFormatError": "验证码格式不正确"
   },
   "orders": {
     "actionRefund": "执行退款",
@@ -310,7 +316,19 @@
     "unlostSuccess": "解除报失成功",
     "vehicleOnline": "在线",
     "vehicleReturned": "车辆已归还",
-    "vinLabel": "车架号："
+    "vinLabel": "车架号：",
+    "battNoLabel": "电池编号：",
+    "battModelLabel": "电池型号：",
+    "createdTimeColon": "创建时间:",
+    "vehicleInfo": "车辆信息",
+    "battModel": "型号",
+    "noIdleBattery": "暂无空闲电池可选",
+    "noIdleVehicle": "暂无空闲车辆可选",
+    "orderEnded": "订单已结束",
+    "vehicleBound": "车辆已绑定",
+    "battBound": "电池已绑定",
+    "vehicleChanged": "车辆已更换",
+    "battChanged": "电池已更换"
   },
   "package": {
     "list": "套餐列表",
@@ -537,13 +555,25 @@
     "userAccount": "用户账号",
     "userInfo": "用户资料",
     "verifyByEmail": "邮箱验证",
-    "verifyByPhone": "手机验证"
+    "verifyByPhone": "手机验证",
+    "userPickSearch": "搜索账号 / 手机号 / 邮箱",
+    "relateVehicle": "关联车型",
+    "searchPackageName": "搜索套餐名称",
+    "phoneColon": "手机号：",
+    "emailColon": "邮箱：",
+    "nameColon": "姓名：",
+    "createdTimeColon": "创建时间：",
+    "parentPositionColon": "上级职位：",
+    "bindSuccess": "绑定成功",
+    "packageAdded": "套餐已新增",
+    "packageSaved": "套餐已保存"
   },
   "tab": {
     "home": "首页",
     "orders": "订单",
     "profile": "我的",
-    "vehicles": "车辆"
+    "vehicles": "车辆",
+    "battery": "电池"
   },
   "toast": {
     "loginSuccess": "登录成功",
@@ -662,7 +692,20 @@
     "viewDetail": "查看详情",
     "vin": "车架号",
     "walk": "步行",
-    "walkMin": "分钟"
+    "walkMin": "分钟",
+    "filterOnlineStatus": "在线状态",
+    "inputVinNo": "输入车辆编号",
+    "battPlateHint": "请输入电池铭牌上的电池编号",
+    "vinPlateHint": "请输入车辆铭牌上的车架号",
+    "battInputPlaceholder": "请输入电池编号",
+    "battNoPosSub": "绑定车辆后同步定位",
+    "batteryModelEdit": "编辑电池型号",
+    "searchBattNo": "搜索电池编号",
+    "searchBattModel": "搜索电池型号",
+    "searchBattModelName": "搜索电池型号名称",
+    "unbindSuccess": "解绑成功",
+    "battInfoSaved": "电池信息已保存",
+    "battModelSaved": "电池型号已保存"
   },
   "version": {
     "appExited": "应用已退出",

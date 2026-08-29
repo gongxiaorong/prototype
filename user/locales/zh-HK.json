@@ -41,7 +41,8 @@
     "segVehicle": "車輛",
     "segBattery": "電池",
     "safeRide": "安全騎行",
-    "myDevices": "我的設備"
+    "myDevices": "我的設備",
+    "distNearestStore": "距最近門店 {dist}"
   },
   "vehicles": {
     "addVinPlaceholder": "請輸入車架號",
@@ -88,7 +89,20 @@
     "cmdSending": "指令下發中…",
     "noDevice": "暫無設備",
     "goHomeToBind": "請前往主頁下單後綁定",
-    "goHome": "前往主頁"
+    "goHome": "前往主頁",
+    "current": "當前",
+    "noDeviceBound": "未綁定設備",
+    "validUntil": "有效期至 {date}",
+    "companionTime": "陪伴時間",
+    "unbind": "解除綁定",
+    "bindVehicle": "綁定車輛",
+    "bindBattery": "綁定電池",
+    "unbindVehicleDesc": "解綁後該車輛將從你的帳號下移除，相關智慧服務將一併失效",
+    "confirmBindVehicle": "確認將該車輛綁定到你的帳號？",
+    "confirmBindBattery": "確認將該電池綁定到你的帳號？",
+    "binding": "綁定中...",
+    "distanceInfo": "距您 {m} 米",
+    "walkInfo": "步行 {m} 分鐘"
   },
   "orders": {
     "cancelOrder": "取消訂單",
@@ -214,7 +228,19 @@
     "days30": "30天",
     "rentDurationTotal": "租賃時長（共{n}{unit}）",
     "unitHour": "小時",
-    "unitDay": "天"
+    "unitDay": "天",
+    "confirmTitle": "訂單確認",
+    "totalDays": "共{n}天",
+    "myOrders": "我的訂單",
+    "uploadNotSupported": "當前訂單狀態暫不支持上傳",
+    "docTextPlaceholder": "請輸入文本資料",
+    "confirmDeleteDoc": "確定刪除這份資料嗎？",
+    "countdownCancel": "剩餘{time}，超時未支付，訂單將自動取消",
+    "returnReminder": "租期剩餘7天，請按時前往門店歸還",
+    "overdueReminder": "訂單已到期，請及時前往門店歸還",
+    "breachReminder": "已違約7天，訂單已被鎖定，請立即聯繫門店處理",
+    "refundDetail": "退款明細",
+    "inputBattNo": "請輸入電池編號"
   },
   "profile": {
     "accountError": "請輸入帳號",
@@ -281,7 +307,14 @@
     "aboutUs": "關於我們",
     "feedback": "意見反饋",
     "nickname": "暱稱",
-    "noMaterial": "暫無資料"
+    "noMaterial": "暫無資料",
+    "switchLang": "切換語言",
+    "phoneVerify": "手機號驗證",
+    "newPwdPlaceholder": "請輸入 6–64 位新密碼",
+    "confirmNewPwd": "確認新密碼",
+    "confirmNewPwdPlaceholder": "請再次輸入新密碼",
+    "currentBound": "當前已綁定：{value}",
+    "idInfoHint": "請上傳身份證、駕照等證件資料"
   },
   "version": {
     "appExited": "應用已退出",
@@ -293,7 +326,9 @@
     "newVersion": "發現新版本",
     "packageDownloaded": "安裝包已下載，即將安裝",
     "relaunch": "重新打開應用",
-    "updateNow": "立即更新"
+    "updateNow": "立即更新",
+    "latestVersion": "最新版本 V{version}",
+    "updateComplete": "更新完成！已升級至 V{version}"
   },
   "dialcode": {
     "australia": "澳大利亞",
@@ -316,7 +351,8 @@
   "toast": {
     "loginSuccess": "登入成功",
     "logout": "已登出",
-    "deviceUnbound": "設備已解綁"
+    "deviceUnbound": "設備已解綁",
+    "deviceBound": "設備綁定成功"
   },
   "common": {
     "cancel": "取消",
@@ -341,7 +377,15 @@
     "clickBlankClose": "點擊空白處關閉",
     "nothingToCopy": "無內容可複製",
     "copied": "已複製",
-    "copyFailed": "複製失敗"
+    "copyFailed": "複製失敗",
+    "unitDayShort": "日",
+    "unitMonthShort": "月",
+    "unitYearShort": "年",
+    "unitHourShort": "時",
+    "unitMinuteShort": "分",
+    "saveSuccess": "保存成功",
+    "materialDeleted": "資料已刪除",
+    "copiedFormat": "{label}已複製"
   },
   "store": {
     "selectStore": "選擇門店",
@@ -362,7 +406,9 @@
     "info": "電池資訊",
     "unbind": "解綁電池",
     "dischargeOn": "允許放電",
-    "dischargeOff": "禁止放電"
+    "dischargeOff": "禁止放電",
+    "unbindDesc": "解綁後該電池將從你的帳號下移除",
+    "orderProgress": "訂單進行中"
   },
   "idInfo": {
     "title": "證件資訊",

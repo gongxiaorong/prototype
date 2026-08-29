@@ -159,7 +159,13 @@
     "phonePlaceholder": "Enter phone number",
     "privacyPolicy": "Privacy Policy",
     "switchLang": "Switch Language",
-    "title": "E-Vehicle Rental Merchant APP"
+    "title": "E-Vehicle Rental Merchant APP",
+    "passwordRequired": "Please enter password",
+    "pwdCharError": "Password can only contain letters, numbers and keyboard symbols",
+    "phoneFormatMismatch": "Invalid phone number, please check the number and area code",
+    "emailTooLong": "Email address cannot exceed 255 characters",
+    "accountCharError": "Account can only contain letters, numbers and underscores",
+    "codeFormatError": "Invalid verification code format"
   },
   "orders": {
     "actionRefund": "Process Refund",
@@ -310,7 +316,19 @@
     "unlostSuccess": "Lost status cleared",
     "vehicleOnline": "Online",
     "vehicleReturned": "Vehicle returned",
-    "vinLabel": "VIN: "
+    "vinLabel": "VIN: ",
+    "battNoLabel": "Battery No.:",
+    "battModelLabel": "Battery Model:",
+    "createdTimeColon": "Created:",
+    "vehicleInfo": "Vehicle Info",
+    "battModel": "Model",
+    "noIdleBattery": "No idle battery available",
+    "noIdleVehicle": "No idle vehicle available",
+    "orderEnded": "Order ended",
+    "vehicleBound": "Vehicle bound",
+    "battBound": "Battery bound",
+    "vehicleChanged": "Vehicle changed",
+    "battChanged": "Battery changed"
   },
   "package": {
     "list": "Package List",
@@ -537,13 +555,25 @@
     "userAccount": "User Account",
     "userInfo": "User Info",
     "verifyByEmail": "Email Verification",
-    "verifyByPhone": "Phone Verification"
+    "verifyByPhone": "Phone Verification",
+    "userPickSearch": "Search account / phone / email",
+    "relateVehicle": "Related Vehicle",
+    "searchPackageName": "Search package name",
+    "phoneColon": "Phone:",
+    "emailColon": "Email:",
+    "nameColon": "Name:",
+    "createdTimeColon": "Created:",
+    "parentPositionColon": "Superior Position:",
+    "bindSuccess": "Bound successfully",
+    "packageAdded": "Package added",
+    "packageSaved": "Package saved"
   },
   "tab": {
     "home": "Home",
     "orders": "Orders",
     "profile": "Profile",
-    "vehicles": "Vehicles"
+    "vehicles": "Vehicles",
+    "battery": "Battery"
   },
   "toast": {
     "loginSuccess": "Login successful",
@@ -662,7 +692,20 @@
     "viewDetail": "View Details",
     "vin": "VIN",
     "walk": "Walk",
-    "walkMin": "min"
+    "walkMin": "min",
+    "filterOnlineStatus": "Online Status",
+    "inputVinNo": "Enter vehicle number",
+    "battPlateHint": "Enter the battery number on the battery nameplate",
+    "vinPlateHint": "Enter the VIN on the vehicle nameplate",
+    "battInputPlaceholder": "Enter battery number",
+    "battNoPosSub": "Location syncs after binding the vehicle",
+    "batteryModelEdit": "Edit Battery Model",
+    "searchBattNo": "Search battery number",
+    "searchBattModel": "Search battery model",
+    "searchBattModelName": "Search battery model name",
+    "unbindSuccess": "Unbound successfully",
+    "battInfoSaved": "Battery info saved",
+    "battModelSaved": "Battery model saved"
   },
   "version": {
     "appExited": "Application exited",

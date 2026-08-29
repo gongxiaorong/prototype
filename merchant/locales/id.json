@@ -159,7 +159,13 @@
     "phonePlaceholder": "Masukkan nomor ponsel",
     "privacyPolicy": "Kebijakan Privasi",
     "switchLang": "Ganti Bahasa",
-    "title": "Aplikasi Mitra Sewa E-Kendaraan"
+    "title": "Aplikasi Mitra Sewa E-Kendaraan",
+    "passwordRequired": "Masukkan kata sandi",
+    "pwdCharError": "Kata sandi hanya boleh berisi huruf, angka, dan simbol keyboard",
+    "phoneFormatMismatch": "Nomor ponsel tidak valid, periksa nomor dan kode area",
+    "emailTooLong": "Alamat email tidak boleh lebih dari 255 karakter",
+    "accountCharError": "Akun hanya boleh berisi huruf, angka, dan garis bawah",
+    "codeFormatError": "Format kode verifikasi tidak valid"
   },
   "orders": {
     "actionRefund": "Lakukan Pengembalian Dana",
@@ -310,7 +316,19 @@
     "unlostSuccess": "Pembatalan laporan hilang berhasil",
     "vehicleOnline": "Online",
     "vehicleReturned": "Kendaraan telah dikembalikan",
-    "vinLabel": "Nomor Rangka:"
+    "vinLabel": "Nomor Rangka:",
+    "battNoLabel": "Nomor Baterai:",
+    "battModelLabel": "Model Baterai:",
+    "createdTimeColon": "Dibuat:",
+    "vehicleInfo": "Info Kendaraan",
+    "battModel": "Model",
+    "noIdleBattery": "Tidak ada baterai kosong tersedia",
+    "noIdleVehicle": "Tidak ada kendaraan kosong tersedia",
+    "orderEnded": "Pesanan telah berakhir",
+    "vehicleBound": "Kendaraan terikat",
+    "battBound": "Baterai terikat",
+    "vehicleChanged": "Kendaraan diganti",
+    "battChanged": "Baterai diganti"
   },
   "package": {
     "list": "Daftar Paket",
@@ -537,13 +555,25 @@
     "userAccount": "Akun Pengguna",
     "userInfo": "Info Pengguna",
     "verifyByEmail": "Verifikasi Email",
-    "verifyByPhone": "Verifikasi Ponsel"
+    "verifyByPhone": "Verifikasi Ponsel",
+    "userPickSearch": "Cari akun / ponsel / email",
+    "relateVehicle": "Kendaraan Terkait",
+    "searchPackageName": "Cari nama paket",
+    "phoneColon": "Nomor Ponsel:",
+    "emailColon": "Email:",
+    "nameColon": "Nama:",
+    "createdTimeColon": "Dibuat:",
+    "parentPositionColon": "Posisi Atasan:",
+    "bindSuccess": "Berhasil diikat",
+    "packageAdded": "Paket telah ditambahkan",
+    "packageSaved": "Paket telah disimpan"
   },
   "tab": {
     "home": "Beranda",
     "orders": "Pesanan",
     "profile": "Profil",
-    "vehicles": "Kendaraan"
+    "vehicles": "Kendaraan",
+    "battery": "Baterai"
   },
   "toast": {
     "loginSuccess": "Berhasil masuk",
@@ -662,7 +692,20 @@
     "viewDetail": "Lihat Detail",
     "vin": "Nomor rangka",
     "walk": "Berjalan",
-    "walkMin": "menit"
+    "walkMin": "menit",
+    "filterOnlineStatus": "Status Online",
+    "inputVinNo": "Masukkan nomor kendaraan",
+    "battPlateHint": "Masukkan nomor baterai pada papan nama baterai",
+    "vinPlateHint": "Masukkan nomor rangka pada papan nama kendaraan",
+    "battInputPlaceholder": "Masukkan nomor baterai",
+    "battNoPosSub": "Lokasi tersinkron setelah mengikat kendaraan",
+    "batteryModelEdit": "Edit Model Baterai",
+    "searchBattNo": "Cari nomor baterai",
+    "searchBattModel": "Cari model baterai",
+    "searchBattModelName": "Cari nama model baterai",
+    "unbindSuccess": "Berhasil dilepas",
+    "battInfoSaved": "Info baterai telah disimpan",
+    "battModelSaved": "Model baterai telah disimpan"
   },
   "version": {
     "appExited": "Aplikasi telah keluar",

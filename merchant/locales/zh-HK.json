@@ -159,7 +159,13 @@
     "phonePlaceholder": "請輸入手機號",
     "privacyPolicy": "隱私政策",
     "switchLang": "切換語言",
-    "title": "電動車租賃商戶管理端"
+    "title": "電動車租賃商戶管理端",
+    "passwordRequired": "請輸入密碼",
+    "pwdCharError": "密碼僅支援大小寫字母、數字、鍵盤符號",
+    "phoneFormatMismatch": "手機號格式不正確，請檢查號碼與區號是否匹配",
+    "emailTooLong": "電郵地址不能超過 255 位",
+    "accountCharError": "帳號僅支援字母、數字、下劃線",
+    "codeFormatError": "驗證碼格式不正確"
   },
   "orders": {
     "actionRefund": "執行退款",
@@ -310,7 +316,19 @@
     "unlostSuccess": "解除報失成功",
     "vehicleOnline": "在線",
     "vehicleReturned": "車輛已歸還",
-    "vinLabel": "車架號："
+    "vinLabel": "車架號：",
+    "battNoLabel": "電池編號：",
+    "battModelLabel": "電池型號：",
+    "createdTimeColon": "建立時間:",
+    "vehicleInfo": "車輛資訊",
+    "battModel": "型號",
+    "noIdleBattery": "暫無空閒電池可選",
+    "noIdleVehicle": "暫無空閒車輛可選",
+    "orderEnded": "訂單已結束",
+    "vehicleBound": "車輛已綁定",
+    "battBound": "電池已綁定",
+    "vehicleChanged": "車輛已更換",
+    "battChanged": "電池已更換"
   },
   "package": {
     "list": "套餐列表",
@@ -537,13 +555,25 @@
     "userAccount": "用戶帳號",
     "userInfo": "用戶資料",
     "verifyByEmail": "電郵驗證",
-    "verifyByPhone": "手機驗證"
+    "verifyByPhone": "手機驗證",
+    "userPickSearch": "搜尋帳號 / 手機號 / 電郵",
+    "relateVehicle": "關聯車型",
+    "searchPackageName": "搜尋套餐名稱",
+    "phoneColon": "手機號：",
+    "emailColon": "電郵：",
+    "nameColon": "姓名：",
+    "createdTimeColon": "建立時間：",
+    "parentPositionColon": "上級職位：",
+    "bindSuccess": "綁定成功",
+    "packageAdded": "套餐已新增",
+    "packageSaved": "套餐已儲存"
   },
   "tab": {
     "home": "首頁",
     "orders": "訂單",
     "profile": "我的",
-    "vehicles": "車輛"
+    "vehicles": "車輛",
+    "battery": "電池"
   },
   "toast": {
     "loginSuccess": "登入成功",
@@ -662,7 +692,20 @@
     "viewDetail": "查看詳情",
     "vin": "車架號",
     "walk": "步行",
-    "walkMin": "分鐘"
+    "walkMin": "分鐘",
+    "filterOnlineStatus": "在線狀態",
+    "inputVinNo": "輸入車輛編號",
+    "battPlateHint": "請輸入電池銘牌上的電池編號",
+    "vinPlateHint": "請輸入車輛銘牌上的車架號",
+    "battInputPlaceholder": "請輸入電池編號",
+    "battNoPosSub": "綁定車輛後同步定位",
+    "batteryModelEdit": "編輯電池型號",
+    "searchBattNo": "搜尋電池編號",
+    "searchBattModel": "搜尋電池型號",
+    "searchBattModelName": "搜尋電池型號名稱",
+    "unbindSuccess": "解綁成功",
+    "battInfoSaved": "電池資訊已儲存",
+    "battModelSaved": "電池型號已儲存"
   },
   "version": {
     "appExited": "應用已退出",

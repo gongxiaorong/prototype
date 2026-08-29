@@ -41,7 +41,8 @@
     "segVehicle": "Kendaraan",
     "segBattery": "Baterai",
     "safeRide": "Berkendara aman",
-    "myDevices": "Perangkat Saya"
+    "myDevices": "Perangkat Saya",
+    "distNearestStore": "{dist} ke toko terdekat"
   },
   "vehicles": {
     "addVinPlaceholder": "Masukkan nomor rangka",
@@ -88,7 +89,20 @@
     "cmdSending": "Mengirim perintah…",
     "noDevice": "Tidak ada perangkat",
     "goHomeToBind": "Silakan buat pesanan di beranda, lalu hubungkan perangkat",
-    "goHome": "Beranda"
+    "goHome": "Beranda",
+    "current": "Saat Ini",
+    "noDeviceBound": "Perangkat belum diikat",
+    "validUntil": "Berlaku hingga {date}",
+    "companionTime": "Waktu Pendamping",
+    "unbind": "Lepas Ikat",
+    "bindVehicle": "Ikat Kendaraan",
+    "bindBattery": "Ikat Baterai",
+    "unbindVehicleDesc": "Setelah dilepas, kendaraan ini akan dihapus dari akun Anda dan layanan pintar terkait akan dinonaktifkan",
+    "confirmBindVehicle": "Konfirmasi mengikat kendaraan ini ke akun Anda?",
+    "confirmBindBattery": "Konfirmasi mengikat baterai ini ke akun Anda?",
+    "binding": "Mengikat...",
+    "distanceInfo": "{m} m dari Anda",
+    "walkInfo": "Jalan {m} menit"
   },
   "orders": {
     "cancelOrder": "Batalkan Pesanan",
@@ -214,7 +228,19 @@
     "days30": "30 Hari",
     "rentDurationTotal": "Durasi Sewa (total {n} {unit})",
     "unitHour": "Jam",
-    "unitDay": "Hari"
+    "unitDay": "Hari",
+    "confirmTitle": "Konfirmasi Pesanan",
+    "totalDays": "Total {n} hari",
+    "myOrders": "Pesanan Saya",
+    "uploadNotSupported": "Unggahan tidak didukung pada status pesanan saat ini",
+    "docTextPlaceholder": "Masukkan materi teks",
+    "confirmDeleteDoc": "Konfirmasi hapus materi ini?",
+    "countdownCancel": "Sisa {time}. Pesanan akan dibatalkan otomatis jika belum dibayar",
+    "returnReminder": "Sisa 7 hari masa sewa, silakan kembalikan ke toko tepat waktu",
+    "overdueReminder": "Pesanan telah berakhir, segera kembalikan ke toko",
+    "breachReminder": "Terlambat 7 hari, pesanan dikunci. Hubungi toko segera",
+    "refundDetail": "Detail Pengembalian Dana",
+    "inputBattNo": "Masukkan nomor baterai"
   },
   "profile": {
     "accountError": "Masukkan akun",
@@ -281,7 +307,14 @@
     "aboutUs": "Tentang Kami",
     "feedback": "Saran",
     "nickname": "Nama Panggilan",
-    "noMaterial": "Tidak ada materi"
+    "noMaterial": "Tidak ada materi",
+    "switchLang": "Ganti Bahasa",
+    "phoneVerify": "Verifikasi Nomor Ponsel",
+    "newPwdPlaceholder": "Masukkan kata sandi baru (6-64 karakter)",
+    "confirmNewPwd": "Konfirmasi Kata Sandi Baru",
+    "confirmNewPwdPlaceholder": "Masukkan kembali kata sandi baru",
+    "currentBound": "Saat ini terikat: {value}",
+    "idInfoHint": "Unggah KTP, SIM, dll."
   },
   "version": {
     "appExited": "Aplikasi telah keluar",
@@ -293,7 +326,9 @@
     "newVersion": "Versi baru ditemukan",
     "packageDownloaded": "Paket instalasi telah diunduh, akan segera dipasang",
     "relaunch": "Buka kembali aplikasi",
-    "updateNow": "Perbarui Sekarang"
+    "updateNow": "Perbarui Sekarang",
+    "latestVersion": "Versi terbaru V{version}",
+    "updateComplete": "Pembaruan selesai! Ditingkatkan ke V{version}"
   },
   "dialcode": {
     "australia": "Australia",
@@ -316,7 +351,8 @@
   "toast": {
     "loginSuccess": "Berhasil masuk",
     "logout": "Telah keluar",
-    "deviceUnbound": "Perangkat dilepas"
+    "deviceUnbound": "Perangkat dilepas",
+    "deviceBound": "Perangkat berhasil diikat"
   },
   "common": {
     "cancel": "Batal",
@@ -341,7 +377,15 @@
     "clickBlankClose": "Ketuk area kosong untuk menutup",
     "nothingToCopy": "Tidak ada yang dapat disalin",
     "copied": "Tersalin",
-    "copyFailed": "Gagal menyalin"
+    "copyFailed": "Gagal menyalin",
+    "unitDayShort": "hri",
+    "unitMonthShort": "bln",
+    "unitYearShort": "thn",
+    "unitHourShort": "jam",
+    "unitMinuteShort": "mnt",
+    "saveSuccess": "Berhasil disimpan",
+    "materialDeleted": "Materi telah dihapus",
+    "copiedFormat": "{label} disalin"
   },
   "store": {
     "selectStore": "Pilih Toko",
@@ -362,7 +406,9 @@
     "info": "Info Baterai",
     "unbind": "Lepas Baterai",
     "dischargeOn": "Izinkan Pelepasan",
-    "dischargeOff": "Nonaktifkan Pelepasan"
+    "dischargeOff": "Nonaktifkan Pelepasan",
+    "unbindDesc": "Setelah dilepas, baterai ini akan dihapus dari akun Anda",
+    "orderProgress": "Pesanan Berlangsung"
   },
   "idInfo": {
     "title": "Info Dokumen",
