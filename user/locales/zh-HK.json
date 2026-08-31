@@ -216,7 +216,7 @@
     "refundSuccess": "退款成功",
     "rent": "租金",
     "rentDuration": "租賃時長",
-    "rentDurationTotal": "租賃時長（共{n}{unit}）",
+    "rentDurationTotal": "共{n}小時",
     "renter": "用車人",
     "returnReminder": "租期剩餘7天，請按時前往門店歸還",
     "returnTimeLabel": "歸還時間",

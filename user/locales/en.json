@@ -216,7 +216,7 @@
     "refundSuccess": "Refund Successful",
     "rent": "Rent",
     "rentDuration": "Rental Duration",
-    "rentDurationTotal": "Rental Duration ({n} {unit} total)",
+    "rentDurationTotal": "{n} hours in total",
     "renter": "Renter",
     "returnReminder": "7 days left in the rental period, please return to the store on time",
     "returnTimeLabel": "Return Time",

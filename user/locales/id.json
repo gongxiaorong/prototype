@@ -216,7 +216,7 @@
     "refundSuccess": "Pengembalian Dana Berhasil",
     "rent": "Sewa",
     "rentDuration": "Durasi Sewa",
-    "rentDurationTotal": "Durasi Sewa (total {n} {unit})",
+    "rentDurationTotal": "Total {n} jam",
     "renter": "Penyewa",
     "returnReminder": "Sisa 7 hari masa sewa, silakan kembalikan ke toko tepat waktu",
     "returnTimeLabel": "Waktu Pengembalian",
