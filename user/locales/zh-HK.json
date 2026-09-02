@@ -52,7 +52,7 @@
     "passwordSub": "密碼登入",
     "phoneMode": "手機號登入",
     "phonePlaceholder": "請輸入手機號",
-    "privacyPolicy": "隱私政策"
+    "privacyPolicy": "用戶隱私政策"
   },
   "dialcode": {
     "australia": "澳大利亞",
@@ -131,7 +131,7 @@
       "4": "租金、押金將在訂單取消後於 7 個工作日內按原支付路徑退還"
     },
     "cancelTime": "取消時間",
-    "confirmCancelDesc": "確定取消該訂單？",
+    "confirmCancelDesc": "確定取消該訂單？取消後不可恢復",
     "confirmCancelTitle": "取消訂單",
     "confirmDeleteDoc": "確定刪除這份資料嗎？",
     "confirmOrder": "確認訂單",
@@ -338,12 +338,12 @@
     "changePassword": "修改密碼",
     "codePlaceholder": "請輸入驗證碼",
     "confirmLogout": "登出",
-    "confirmLogoutDesc": "退出後需重新登入。",
+    "confirmLogoutDesc": "確定要退出當前帳號嗎？退出後需重新登入。",
     "confirmNewPwd": "確認新密碼",
     "confirmNewPwdPlaceholder": "請再次輸入新密碼",
     "confirmReplace": "確認替換",
     "createdTime": "建立時間",
-    "csDeleted": "已刪除",
+    "csDeleted": "證件已刪除",
     "currentBound": "當前已綁定：{value}",
     "datePickerDay": "日",
     "datePickerMonth": "月",
