@@ -382,7 +382,8 @@
     "notUploaded": "未上傳"
   },
   "scan": {
-    "qrHint": "請將二維碼對準取景框"
+    "qrHint": "請將二維碼對準取景框",
+    "invalidQr": "無效二維碼"
   },
   "weekday": {
     "mon": "週一",

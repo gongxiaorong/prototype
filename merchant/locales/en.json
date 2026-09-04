@@ -685,5 +685,8 @@
       "find_car": "Locate vehicle by horn"
     },
     "list": "Vehicle list"
+  },
+  "scan": {
+    "invalidQr": "Invalid QR code"
   }
 }

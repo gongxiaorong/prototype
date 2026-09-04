@@ -382,7 +382,8 @@
     "notUploaded": "Not uploaded"
   },
   "scan": {
-    "qrHint": "Align the QR code with the frame"
+    "qrHint": "Align the QR code with the frame",
+    "invalidQr": "Invalid QR code"
   },
   "weekday": {
     "mon": "Mon",

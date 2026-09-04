@@ -382,7 +382,8 @@
     "notUploaded": "未上传"
   },
   "scan": {
-    "qrHint": "请将二维码对准取景框"
+    "qrHint": "请将二维码对准取景框",
+    "invalidQr": "无效二维码"
   },
   "weekday": {
     "mon": "周一",

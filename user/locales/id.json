@@ -382,7 +382,8 @@
     "notUploaded": "Belum diunggah"
   },
   "scan": {
-    "qrHint": "Arahkan kode QR ke bingkai"
+    "qrHint": "Arahkan kode QR ke bingkai",
+    "invalidQr": "Kode QR tidak valid"
   },
   "weekday": {
     "mon": "Sen",

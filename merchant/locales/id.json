@@ -685,5 +685,8 @@
       "find_car": "Cari kendaraan dengan klakson"
     },
     "list": "Daftar kendaraan"
+  },
+  "scan": {
+    "invalidQr": "Kode QR tidak valid"
   }
 }
